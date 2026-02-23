@@ -1,93 +1,100 @@
-/* ===== RESET ===== */
-* {
-    box-sizing: border-box;
-}
-
+/* ===== GLOBAL ===== */
 body {
     margin: 0;
-    background: #0b0f14;
-    color: #d6d6d6;
+    background-color: #000000;
+    color: #e6e6e6;
     font-family: "JetBrains Mono", monospace;
 }
 
 /* ===== HEADER ===== */
 header {
-    background: #0f141a;
-    border-bottom: 1px solid #1c252e;
     text-align: center;
-    padding: 25px 20px;
+    padding: 40px 20px;
+    border-bottom: 1px solid #111;
 }
 
 header h1 {
+    color: #ff003c;
+    font-size: 2.6rem;
     margin: 0;
-    color: #ff2e63;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 }
 
-header p {
-    color: #6c7a89;
+.tagline {
+    color: #888;
+    margin-top: 10px;
 }
 
-/* ===== SECTION LAYOUT ===== */
+/* ===== SECTION ===== */
 section {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    border-bottom: 1px solid #0d0d0d;
 }
 
-/* ===== GRID ===== */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-}
-
-/* ===== CARD ===== */
-.card {
-    background: #111821;
-    padding: 22px;
-    border-radius: 6px;
-    border: 1px solid #1c252e;
-    transition: 0.25s ease;
-}
-
-.card:hover {
-    border-color: #ff2e63;
-    transform: translateY(-3px);
-}
-
-/* ===== HEADINGS ===== */
+/* ===== TITLES ===== */
 h2 {
-    color: #ff5c8a;
-    margin-bottom: 15px;
+    color: #ff003c;
+    margin-bottom: 20px;
 }
 
 h3 {
-    color: #00ffc8;
-    margin-top: 0;
+    color: #00ff9f;
 }
 
-/* ===== LINKS ===== */
+/* ===== TEXT ===== */
+p {
+    line-height: 1.7;
+    color: #cfcfcf;
+}
+
+/* ===== LIST ===== */
+ul {
+    padding-left: 20px;
+}
+
+/* ===== WRITEUP LINKS ===== */
 a {
-    color: #00ffc8;
+    color: #00ff9f;
     text-decoration: none;
 }
 
 a:hover {
-    color: #ff2e63;
+    color: #ff003c;
+}
+
+/* ===== CODE BLOCK STYLE ===== */
+pre {
+    background: #050505;
+    border-left: 3px solid #ff003c;
+    padding: 15px;
+    overflow-x: auto;
+}
+
+code {
+    color: #00ff9f;
+}
+
+/* ===== EXPERIENCE BLOCK ===== */
+.block {
+    margin-bottom: 25px;
 }
 
 /* ===== FOOTER ===== */
 footer {
     text-align: center;
-    color: #6c7a89;
     padding: 30px;
-    border-top: 1px solid #1c252e;
+    color: #555;
 }
 
 /* ===== MOBILE ===== */
-@media (max-width: 768px) {
+@media (max-width:768px){
     header h1 {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
+    }
+
+    section {
+        padding: 25px 15px;
     }
 }
