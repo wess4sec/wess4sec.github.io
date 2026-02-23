@@ -1,33 +1,38 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-const text = [
-"Initializing operator profile...",
-"Loading tools...",
-"Establishing persistence...",
-"Welcome, Oussama Zehri."
-];
+    const lines = [
+        "Initializing operator profile...",
+        "Loading tools...",
+        "Establishing persistence...",
+        "Welcome, Oussama Zehri."
+    ];
 
-let line = 0;
-let char = 0;
-const speed = 35;
+    let lineIndex = 0;
+    let charIndex = 0;
+    const typingSpeed = 35;
+    const lineDelay = 500;
 
-const typingElement = document.getElementById("typing");
+    const typingEl = document.getElementById("typing");
 
-function typeLine() {
-    if (line >= text.length) return;
+    if (!typingEl) return;
 
-    if (char < text[line].length) {
-        typingElement.innerHTML += text[line].charAt(char);
-        char++;
-        setTimeout(typeLine, speed);
-    } else {
-        typingElement.innerHTML += "<br>";
-        line++;
-        char = 0;
-        setTimeout(typeLine, 500);
+    function typeLine() {
+        if (lineIndex >= lines.length) return;
+
+        const currentLine = lines[lineIndex];
+
+        if (charIndex < currentLine.length) {
+            typingEl.innerHTML += currentLine.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeLine, typingSpeed);
+        } else {
+            typingEl.innerHTML += "<br>";
+            lineIndex++;
+            charIndex = 0;
+            setTimeout(typeLine, lineDelay);
+        }
     }
-}
 
-typeLine();
+    typeLine();
 
 });
