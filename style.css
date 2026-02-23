@@ -98,3 +98,17 @@ footer {
         padding: 25px 15px;
     }
 }
+/* Terminal */
+#terminal {
+    margin-top: 20px;
+    color: #00ff9f;
+    font-size: 0.95rem;
+}
+
+.cursor {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
