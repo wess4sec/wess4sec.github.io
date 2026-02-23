@@ -85,3 +85,44 @@ footer {
     color: #555;
     font-size: 12px;
 }
+/* === Mobile Optimization === */
+
+@media (max-width: 768px) {
+    section {
+        padding: 30px 6%;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 15px;
+    }
+}
+/* === Code Blocks (Pentest Style) === */
+
+pre {
+    background: #050505;
+    border: 1px solid #222;
+    padding: 15px;
+    overflow-x: auto;
+    color: #00ff9c;
+    font-size: 14px;
+}
+
+code {
+    font-family: Consolas, monospace;
+}
+
+.command {
+    color: #00ff9c;
+}
+
+.output {
+    color: #ccc;
+}
