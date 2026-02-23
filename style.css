@@ -123,3 +123,8 @@ body::before {
         radial-gradient(rgba(255,0,60,0.06), transparent 70%);
     pointer-events:none;
 }
+#terminal {
+    margin-top: 25px;
+    font-size: 0.95rem;
+    color: #00ff9f;
+}
