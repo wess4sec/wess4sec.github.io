@@ -126,3 +126,56 @@ code {
 .output {
     color: #ccc;
 }
+/* === Markdown Content Styling === */
+
+.content {
+    max-width: 900px;
+    margin: auto;
+    line-height: 1.7;
+}
+
+/* headings inside writeups */
+.content h1, .content h2, .content h3 {
+    color: #ff3b3b;
+    margin-top: 40px;
+}
+
+/* tables */
+.content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.content th, .content td {
+    border: 1px solid #222;
+    padding: 10px;
+}
+
+.content th {
+    background: #111;
+}
+
+/* blockquotes */
+.content blockquote {
+    border-left: 3px solid #ff3b3b;
+    padding-left: 15px;
+    color: #aaa;
+    margin: 20px 0;
+}
+
+/* inline code */
+.content code {
+    background: #111;
+    padding: 2px 6px;
+    color: #00ff9c;
+}
+
+/* code blocks */
+.content pre {
+    background: #050505;
+    border: 1px solid #222;
+    padding: 15px;
+    overflow-x: auto;
+    color: #00ff9c;
+}
