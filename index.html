@@ -2,24 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oussama Zehri | Offensive Security</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<script src="typing.js"></script>
+
 <header>
     <h1>Oussama Zehri</h1>
-    <p>Penetration Testing · Threat Detection · Adversarial Simulation</p>
+    <p class="tagline">Penetration Testing · Threat Detection · Adversarial Simulation</p>
+    <div id="terminal">
+        <span class="prompt">root@redteam:~#</span>
+        <span id="typing"></span>
+        <span class="cursor">█</span>
+    </div>
 </header>
-   <div id="terminal">
-    <span style="color:#ff003c;">root@redteam:~#</span>
-    <span id="typing"></span>
-    <span class="cursor">█</span>
-</div>
 
 <section>
-    <h2>Profile</h2>
+    <h2>// Profile</h2>
     <p>
         Cybersecurity-focused Information Technology student specializing in penetration testing,
         vulnerability assessment, and adversarial methodologies. Hands-on experience in security
@@ -29,24 +33,20 @@
 </section>
 
 <section>
-    <h2>Core Capabilities</h2>
-
+    <h2>// Core Capabilities</h2>
     <div class="grid">
         <div class="card">
             <h3>Offensive Security</h3>
             <p>Web Application Testing · Enumeration · Exploitation · Privilege Escalation</p>
         </div>
-
         <div class="card">
             <h3>Security Operations</h3>
             <p>Wazuh Monitoring · Log Analysis · Threat Detection · Honeypot Deployment</p>
         </div>
-
         <div class="card">
             <h3>Network & Assessment</h3>
             <p>Nmap · Wireshark · Service Enumeration · Vulnerability Discovery</p>
         </div>
-
         <div class="card">
             <h3>Scripting & Databases</h3>
             <p>Python · SQL · PHP · JavaScript · Java · C · MongoDB</p>
@@ -55,24 +55,22 @@
 </section>
 
 <section>
-    <h2>Certifications & Training</h2>
-    <div class="card">
-        ✔ eJPTv2 — Junior Penetration Tester<br>
-        ✔ CompTIA Network+<br>
-        ✔ CompTIA A+<br>
-        ✔ IBM Cybersecurity Fundamentals<br>
-        ✔ Cisco Introduction to Cybersecurity<br>
-        ⏳ eCPPTv3 (In Progress)
+    <h2>// Certifications & Training</h2>
+    <div class="card cert-card">
+        <div class="cert-item done">✔ eJPTv2 — Junior Penetration Tester</div>
+        <div class="cert-item done">✔ CompTIA Network+</div>
+        <div class="cert-item done">✔ CompTIA A+</div>
+        <div class="cert-item done">✔ IBM Cybersecurity Fundamentals</div>
+        <div class="cert-item done">✔ Cisco Introduction to Cybersecurity</div>
+        <div class="cert-item pending">⏳ eCPPTv3 — In Progress</div>
     </div>
 </section>
 
 <section>
-    <h2>Relevant Experience</h2>
-
+    <h2>// Relevant Experience</h2>
     <div class="grid">
-
         <div class="card">
-            <h3>Cybersecurity Intern — Airbus </h3>
+            <h3>Cybersecurity Intern — Airbus</h3>
             <p>
                 Worked within enterprise infrastructure focusing on Active Directory security,
                 endpoint monitoring, and internal threat detection.
@@ -81,7 +79,6 @@
                 Assisted in strengthening domain-level visibility and security event correlation.
             </p>
         </div>
-
         <div class="card">
             <h3>SOC / Security Monitoring Internship</h3>
             <p>
@@ -89,7 +86,6 @@
                 Deployed honeypots to simulate attack surfaces and analyze adversarial behavior.
             </p>
         </div>
-
         <div class="card">
             <h3>Telecom Infrastructure Internship</h3>
             <p>
@@ -97,29 +93,27 @@
                 gaining operational understanding of telecom service deployment.
             </p>
         </div>
-
     </div>
 </section>
 
 <section>
-    <h2>Technical Stack</h2>
+    <h2>// Technical Stack</h2>
     <div class="card">
-        <strong>Languages:</strong> Python, C, JavaScript, SQL, PHP<br>
-        <strong>Security Tools:</strong> Burp Suite, Nmap, Hydra, Metasploit, Wireshark<br>
-        <strong>Platforms:</strong> Wazuh, Active Directory, Honeypots
+        <div class="stack-row"><span class="stack-label">Languages</span><span>Python · C · JavaScript · SQL · PHP</span></div>
+        <div class="stack-row"><span class="stack-label">Security Tools</span><span>Burp Suite · Nmap · Hydra · Metasploit · Wireshark</span></div>
+        <div class="stack-row"><span class="stack-label">Platforms</span><span>Wazuh · Active Directory · Honeypots</span></div>
     </div>
 </section>
 
 <section>
-    <h2>Writeups</h2>
+    <h2>// Writeups</h2>
     <div class="grid">
-        <div class="card">
+        <div class="card writeup-card">
             <h3>Aster</h3>
             <p>VoIP exploitation → privilege escalation chain.</p>
             <a href="writeups/thm/aster.html">Read Writeup →</a>
         </div>
-
-        <div class="card">
+        <div class="card writeup-card">
             <h3>Agent Root</h3>
             <p>Multi-vector exploitation scenario.</p>
             <a href="writeups/thm/agent-root.html">Read Writeup →</a>
@@ -128,8 +122,9 @@
 </section>
 
 <footer>
-    © 2026 — Oussama Zehri
+    <span>© 2026 — Oussama Zehri</span>
 </footer>
 
+<script src="typing.js"></script>
 </body>
 </html>
