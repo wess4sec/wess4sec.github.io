@@ -12,9 +12,44 @@
 
 <body>
 
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">◐</button>
+
+<!-- HEADER -->
 <header>
     <h1>Oussama Zehri</h1>
     <p class="tagline">Penetration Testing · Threat Detection · Adversarial Simulation</p>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stat">
+            <span class="stat-number">110+</span>
+            <span class="stat-label">Machines Rooted</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+            <span class="stat-number">Top 4%</span>
+            <span class="stat-label">TryHackMe Global</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+            <span class="stat-number">3</span>
+            <span class="stat-label">Internships</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+            <span class="stat-number">5</span>
+            <span class="stat-label">Certifications</span>
+        </div>
+    </div>
+
+    <!-- HEADER ACTIONS -->
+    <div class="header-actions">
+        <a href="cv.pdf" download class="btn-primary">⬇ Download CV</a>
+        <a href="#contact" class="btn-secondary">Contact Me</a>
+    </div>
+
+    <!-- TERMINAL -->
     <div id="terminal">
         <span class="prompt">root@redteam:~#</span>
         <span id="typing"></span>
@@ -22,6 +57,7 @@
     </div>
 </header>
 
+<!-- PROFILE -->
 <section>
     <h2>// Profile</h2>
     <p>
@@ -32,6 +68,26 @@
     </p>
 </section>
 
+<!-- CTF ACTIVITY -->
+<section>
+    <h2>// CTF Activity</h2>
+    <div class="grid">
+        <div class="card ctf-card">
+            <div class="ctf-platform">TryHackMe</div>
+            <div class="ctf-rank">Top 4%</div>
+            <div class="ctf-detail">110+ machines rooted globally</div>
+            <a href="https://tryhackme.com/p/wess4sec" target="_blank" class="ctf-link">View Profile →</a>
+        </div>
+        <div class="card ctf-card">
+            <div class="ctf-platform">GitHub</div>
+            <div class="ctf-rank">wess4sec</div>
+            <div class="ctf-detail">Tools · Writeups · Projects</div>
+            <a href="https://github.com/wess4sec" target="_blank" class="ctf-link">View Profile →</a>
+        </div>
+    </div>
+</section>
+
+<!-- CORE CAPABILITIES -->
 <section>
     <h2>// Core Capabilities</h2>
     <div class="grid">
@@ -54,6 +110,70 @@
     </div>
 </section>
 
+<!-- SKILLS -->
+<section>
+    <h2>// Skills</h2>
+    <div class="skills-grid">
+        <div class="skill-item">
+            <div class="skill-header">
+                <span class="skill-name">Penetration Testing</span>
+                <span class="skill-level">Advanced</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-header">
+                <span class="skill-name">Burp Suite</span>
+                <span class="skill-level">Advanced</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="82%"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-header">
+                <span class="skill-name">Python Scripting</span>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="70%"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-header">
+                <span class="skill-name">Metasploit</span>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="72%"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-header">
+                <span class="skill-name">Wazuh / SIEM</span>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="68%"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-header">
+                <span class="skill-name">Active Directory</span>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="65%"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-header">
+                <span class="skill-name">Network Analysis</span>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="70%"></div></div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-header">
+                <span class="skill-name">Linux Administration</span>
+                <span class="skill-level">Advanced</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- CERTIFICATIONS -->
 <section>
     <h2>// Certifications & Training</h2>
     <div class="card cert-card">
@@ -66,6 +186,7 @@
     </div>
 </section>
 
+<!-- EXPERIENCE -->
 <section>
     <h2>// Relevant Experience</h2>
     <div class="grid">
@@ -96,6 +217,36 @@
     </div>
 </section>
 
+<!-- PROJECTS -->
+<section>
+    <h2>// Featured Projects</h2>
+    <div class="grid">
+        <div class="card project-card">
+            <div class="project-tag">Python · Networking</div>
+            <h3>Socket Port Scanner</h3>
+            <p>Custom-built TCP port scanner using raw Python sockets. Supports multi-threading for fast concurrent scanning across host ranges.</p>
+            <div class="project-tech">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Sockets</span>
+                <span class="tech-badge">Threading</span>
+            </div>
+            <a href="https://github.com/wess4sec" target="_blank">View on GitHub →</a>
+        </div>
+        <div class="card project-card">
+            <div class="project-tag">Python · Security</div>
+            <h3>Vulnerability Scanner</h3>
+            <p>Automated vulnerability scanner that probes common services for known misconfigurations, open ports, and weak credentials.</p>
+            <div class="project-tech">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Nmap</span>
+                <span class="tech-badge">Automation</span>
+            </div>
+            <a href="https://github.com/wess4sec" target="_blank">View on GitHub →</a>
+        </div>
+    </div>
+</section>
+
+<!-- TECHNICAL STACK -->
 <section>
     <h2>// Technical Stack</h2>
     <div class="card">
@@ -107,26 +258,91 @@
     </div>
 </section>
 
+<!-- WRITEUPS -->
 <section>
     <h2>// Writeups</h2>
     <div class="grid">
         <div class="card writeup-card">
+            <div class="writeup-meta">TryHackMe · Medium</div>
             <h3>Aster</h3>
             <p>VoIP exploitation → privilege escalation chain.</p>
+            <div class="project-tech">
+                <span class="tech-badge">VoIP</span>
+                <span class="tech-badge">AMI</span>
+                <span class="tech-badge">PrivEsc</span>
+            </div>
             <a href="writeups/thm/aster.html">Read Writeup →</a>
         </div>
         <div class="card writeup-card">
+            <div class="writeup-meta">TryHackMe · Hard</div>
             <h3>Agent Root</h3>
             <p>Multi-vector exploitation scenario.</p>
+            <div class="project-tech">
+                <span class="tech-badge">Multi-vector</span>
+                <span class="tech-badge">PrivEsc</span>
+            </div>
             <a href="writeups/thm/agent-root.html">Read Writeup →</a>
         </div>
     </div>
 </section>
 
+<!-- CONTACT -->
+<section id="contact">
+    <h2>// Contact</h2>
+    <p style="margin-bottom:28px; color:var(--text-dim);">Available for internships, junior roles, and freelance security assessments.</p>
+    <div class="contact-grid">
+        <a href="mailto:wess4sec@gmail.com" class="contact-card">
+            <span class="contact-icon">✉</span>
+            <span class="contact-label">Email</span>
+            <span class="contact-value">wess4sec@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/oussama-zehri-426091278/" target="_blank" class="contact-card">
+            <span class="contact-icon">in</span>
+            <span class="contact-label">LinkedIn</span>
+            <span class="contact-value">oussama-zehri</span>
+        </a>
+        <a href="https://github.com/wess4sec" target="_blank" class="contact-card">
+            <span class="contact-icon">⌥</span>
+            <span class="contact-label">GitHub</span>
+            <span class="contact-value">wess4sec</span>
+        </a>
+        <a href="https://tryhackme.com/p/wess4sec" target="_blank" class="contact-card">
+            <span class="contact-icon">⚑</span>
+            <span class="contact-label">TryHackMe</span>
+            <span class="contact-value">Top 4% Global</span>
+        </a>
+    </div>
+</section>
+
 <footer>
-    <span>© 2026 — Oussama Zehri</span>
+    <span>© 2026 — Oussama Zehri &nbsp;·&nbsp; <a href="mailto:wess4sec@gmail.com">wess4sec@gmail.com</a></span>
 </footer>
 
 <script src="typing.js"></script>
+<script>
+    // Theme toggle
+    const toggle = document.getElementById('themeToggle');
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light');
+    }
+    toggle.addEventListener('click', () => {
+        document.body.classList.toggle('light');
+        localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    // Animate skill bars when scrolled into view
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width');
+                });
+                skillObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.skills-grid').forEach(el => skillObserver.observe(el));
+</script>
 </body>
 </html>
