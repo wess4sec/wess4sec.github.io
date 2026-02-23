@@ -1,130 +1,264 @@
-/* ===== GLOBAL ===== */
+/* ===== VARIABLES ===== */
+:root {
+    --red: #ff003c;
+    --green: #00ff9f;
+    --bg: #000000;
+    --bg-card: #060606;
+    --bg-card-hover: #0c0c0c;
+    --border: #111111;
+    --text: #cfcfcf;
+    --text-dim: #888;
+    --text-faint: #555;
+}
+
+/* ===== RESET & GLOBAL ===== */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
-    background-color: #000000;
-    color: #e6e6e6;
+    background-color: var(--bg);
+    color: var(--text);
     font-family: "JetBrains Mono", monospace;
+}
+
+/* Subtle red radial glow overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255, 0, 60, 0.07), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 /* ===== HEADER ===== */
 header {
+    position: relative;
     text-align: center;
-    padding: 40px 20px;
-    border-bottom: 1px solid #111;
+    padding: 60px 20px 40px;
+    border-bottom: 1px solid var(--border);
+    z-index: 1;
 }
 
 header h1 {
-    color: #ff003c;
+    color: var(--red);
     font-size: 2.6rem;
-    margin: 0;
-    letter-spacing: 3px;
+    margin: 0 0 8px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
 }
 
 .tagline {
-    color: #888;
-    margin-top: 10px;
+    color: var(--text-dim);
+    margin: 0 0 20px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
 }
 
-/* ===== SECTION ===== */
-section {
-    max-width: 900px;
-    margin: auto;
-    padding: 40px 20px;
-    border-bottom: 1px solid #0d0d0d;
-}
-
-/* ===== TITLES ===== */
-h2 {
-    color: #ff003c;
-    margin-bottom: 20px;
-}
-
-h3 {
-    color: #00ff9f;
-}
-
-/* ===== TEXT ===== */
-p {
-    line-height: 1.7;
-    color: #cfcfcf;
-}
-
-/* ===== LIST ===== */
-ul {
-    padding-left: 20px;
-}
-
-/* ===== WRITEUP LINKS ===== */
-a {
-    color: #00ff9f;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #ff003c;
-}
-
-/* ===== CODE BLOCK STYLE ===== */
-pre {
-    background: #050505;
-    border-left: 3px solid #ff003c;
-    padding: 15px;
-    overflow-x: auto;
-}
-
-code {
-    color: #00ff9f;
-}
-
-/* ===== EXPERIENCE BLOCK ===== */
-.block {
-    margin-bottom: 25px;
-}
-
-/* ===== FOOTER ===== */
-footer {
-    text-align: center;
-    padding: 30px;
-    color: #555;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width:768px){
-    header h1 {
-        font-size: 1.8rem;
-    }
-
-    section {
-        padding: 25px 15px;
-    }
-}
-/* Terminal */
+/* ===== TERMINAL ===== */
 #terminal {
+    display: inline-block;
     margin-top: 20px;
-    color: #00ff9f;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    color: var(--green);
+    text-align: left;
+    min-height: 90px;
+}
+
+.prompt {
+    color: var(--red);
+    display: block;
+    margin-bottom: 4px;
+}
+
+#typing {
+    color: var(--green);
+    line-height: 1.8;
 }
 
 .cursor {
-    animation: blink 1s infinite;
+    animation: blink 1s step-end infinite;
+    color: var(--green);
 }
 
 @keyframes blink {
     50% { opacity: 0; }
 }
-body::before {
-    content: "";
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:
-        radial-gradient(rgba(255,0,60,0.06), transparent 70%);
-    pointer-events:none;
+
+/* ===== SECTIONS ===== */
+section {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 50px 24px;
+    border-bottom: 1px solid var(--border);
+    z-index: 1;
 }
-#terminal {
-    margin-top: 25px;
+
+/* ===== HEADINGS ===== */
+h2 {
+    color: var(--red);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+}
+
+h3 {
+    color: var(--green);
+    margin: 0 0 10px;
     font-size: 0.95rem;
-    color: #00ff9f;
+}
+
+/* ===== PARAGRAPH ===== */
+p {
+    line-height: 1.8;
+    color: var(--text);
+    margin: 0;
+    font-size: 0.88rem;
+}
+
+/* ===== GRID ===== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+/* ===== CARD ===== */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    padding: 20px 22px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+    background: var(--bg-card-hover);
+    border-left-color: var(--green);
+}
+
+/* ===== CERTIFICATIONS ===== */
+.cert-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cert-item {
+    font-size: 0.88rem;
+    padding: 6px 0;
+    border-bottom: 1px solid #0d0d0d;
+}
+
+.cert-item:last-child {
+    border-bottom: none;
+}
+
+.cert-item.done {
+    color: var(--green);
+}
+
+.cert-item.pending {
+    color: var(--text-dim);
+}
+
+/* ===== TECH STACK ===== */
+.stack-row {
+    display: flex;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #0d0d0d;
+    font-size: 0.88rem;
+    align-items: baseline;
+}
+
+.stack-row:last-child {
+    border-bottom: none;
+}
+
+.stack-label {
+    color: var(--green);
+    min-width: 130px;
+    flex-shrink: 0;
+    font-weight: 600;
+}
+
+/* ===== LINKS ===== */
+a {
+    color: var(--green);
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: color 0.15s ease;
+}
+
+a:hover {
+    color: var(--red);
+}
+
+/* ===== WRITEUP CARD ===== */
+.writeup-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.writeup-card a {
+    margin-top: auto;
+    padding-top: 12px;
+}
+
+/* ===== CODE BLOCKS ===== */
+pre {
+    background: #050505;
+    border-left: 3px solid var(--red);
+    padding: 15px;
+    overflow-x: auto;
+    margin: 0;
+}
+
+code {
+    color: var(--green);
+    font-family: "JetBrains Mono", monospace;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    position: relative;
+    text-align: center;
+    padding: 30px;
+    color: var(--text-faint);
+    font-size: 0.8rem;
+    z-index: 1;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+    }
+
+    section {
+        padding: 32px 16px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stack-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .stack-label {
+        min-width: unset;
+    }
 }
