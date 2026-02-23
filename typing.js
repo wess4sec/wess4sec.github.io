@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", function () {
+
 const text = [
 "Initializing operator profile...",
 "Loading tools...",
@@ -7,21 +9,25 @@ const text = [
 
 let line = 0;
 let char = 0;
-const speed = 40;
+const speed = 35;
 
-function type() {
-    if (line < text.length) {
-        if (char < text[line].length) {
-            document.getElementById("typing").innerHTML += text[line][char];
-            char++;
-            setTimeout(type, speed);
-        } else {
-            document.getElementById("typing").innerHTML += "<br>";
-            line++;
-            char = 0;
-            setTimeout(type, 400);
-        }
+const typingElement = document.getElementById("typing");
+
+function typeLine() {
+    if (line >= text.length) return;
+
+    if (char < text[line].length) {
+        typingElement.innerHTML += text[line].charAt(char);
+        char++;
+        setTimeout(typeLine, speed);
+    } else {
+        typingElement.innerHTML += "<br>";
+        line++;
+        char = 0;
+        setTimeout(typeLine, 500);
     }
 }
 
-type();
+typeLine();
+
+});
