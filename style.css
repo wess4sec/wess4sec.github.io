@@ -1,3 +1,40 @@
+/* ===== BASMALA ===== */
+.basmala {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 30px 20px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.bismillah {
+    margin: 0;
+    font-size: 2.8rem;
+    color: var(--red);
+    direction: rtl;
+    line-height: 1.4;
+    text-shadow: 0 0 30px rgba(255, 0, 60, 0.3);
+    letter-spacing: 2px;
+}
+
+.ayah-text {
+    margin: 0;
+    font-family: "JetBrains Mono", serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    direction: rtl;
+    letter-spacing: 3px;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    width: fit-content;
+}
+
 /* ===== VARIABLES ===== */
 :root {
     --red: #ff003c;
