@@ -50,7 +50,7 @@
 
     <div class="stats-bar">
         <div class="stat">
-            <span class="stat-number">110+</span>
+            <span class="stat-number" id="machineCount" data-target="110">0</span><span class="stat-number">+</span>
             <span class="stat-label">Machines Rooted</span>
         </div>
         <div class="stat-divider"></div>
@@ -228,6 +228,31 @@
         });
     }, { threshold: 0.2 });
     document.querySelectorAll('.skills-grid').forEach(el => skillObserver.observe(el));
+
+    // Counter animation for machines rooted
+    const countEl = document.getElementById('machineCount');
+    if (countEl) {
+        const target = parseInt(countEl.getAttribute('data-target'));
+        const duration = 2000;
+        const step = 16;
+        const increment = target / (duration / step);
+        let current = 0;
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        countEl.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        countEl.textContent = Math.floor(current);
+                    }
+                }, step);
+                observer.unobserve(countEl);
+            }
+        }, { threshold: 0.5 });
+        observer.observe(countEl);
+    }
 
     // Dropdown toggle - click based, closes on outside click
     const writeupToggle = document.getElementById('writeupToggle');
