@@ -12,13 +12,11 @@
 </head>
 <body>
 
-<!-- BASMALA -->
 <div class="basmala">
     <p class="bismillah">﷽</p>
     <p class="ayah-text">وَقُل رَّبِّ زِدْنِي عِلْمًا</p>
 </div>
 
-<!-- NAVBAR -->
 <nav class="navbar">
     <div class="nav-brand">~/wess4sec</div>
     <ul class="nav-links">
@@ -32,14 +30,13 @@
     <button class="theme-toggle" id="themeToggle" title="Toggle theme">◐</button>
 </nav>
 
-<!-- HEADER -->
 <div class="page-header">
     <h1>// Writeups</h1>
     <p class="page-subtitle">Documented exploitation paths, techniques, and lessons learned.</p>
     <div class="writeups-stats">
-        <span class="ws-item"><span class="ws-num">4</span> Total</span>
+        <span class="ws-item"><span class="ws-num">5</span> Total</span>
         <span class="ws-div"></span>
-        <span class="ws-item"><span class="ws-num">4</span> TryHackMe</span>
+        <span class="ws-item"><span class="ws-num">5</span> TryHackMe</span>
         <span class="ws-div"></span>
         <span class="ws-item"><span class="ws-num">0</span> HackTheBox</span>
     </div>
@@ -47,16 +44,16 @@
 
 <main class="writeups-main">
 
-    <!-- TRYHACKME -->
     <section id="tryhackme">
         <div class="platform-header">
             <span class="platform-dot thm"></span>
             <h2>// TryHackMe</h2>
-            <span class="platform-count"><a href="writeups/thm/" style="color:var(--text-faint);font-size:0.72rem;">4 writeups →</a></span>
+            <span class="platform-count"><a href="writeups/thm/" style="color:var(--text-faint);font-size:0.72rem;">5 writeups →</a></span>
         </div>
         <div class="grid">
+
             <div class="card writeup-card">
-                <div class="writeup-meta">Medium</div>
+                <div class="writeup-meta">Easy</div>
                 <h3>Aster</h3>
                 <p>VoIP exploitation → privilege escalation chain via Asterisk Manager Interface and insecure Java application logic.</p>
                 <div class="project-tech">
@@ -81,7 +78,6 @@
                 <a href="writeups/thm/smag-grotto.html">Read Writeup →</a>
             </div>
 
-            
             <div class="card writeup-card">
                 <div class="writeup-meta">Easy</div>
                 <h3>Creative</h3>
@@ -96,6 +92,18 @@
             </div>
 
             <div class="card writeup-card">
+                <div class="writeup-meta">Easy</div>
+                <h3>VulnNet: Roasted</h3>
+                <p>Full Active Directory attack chain — AS-REP Roasting, credential harvesting from NETLOGON, secretsdump, Pass-the-Hash → Domain Admin.</p>
+                <div class="project-tech">
+                    <span class="tech-badge">Active Directory</span>
+                    <span class="tech-badge">AS-REP Roast</span>
+                    <span class="tech-badge">Pass-the-Hash</span>
+                </div>
+                <a href="writeups/thm/vulnnet-roasted.html">Read Writeup →</a>
+            </div>
+
+            <div class="card writeup-card">
                 <div class="writeup-meta">Hard</div>
                 <h3>Agent Root</h3>
                 <p>Multi-vector exploitation scenario requiring chained techniques for full system compromise.</p>
@@ -105,10 +113,10 @@
                 </div>
                 <a href="writeups/thm/agent-root.html">Read Writeup →</a>
             </div>
+
         </div>
     </section>
 
-    <!-- HACKTHEBOX -->
     <section id="hackthebox">
         <div class="platform-header">
             <span class="platform-dot htb"></span>
@@ -124,7 +132,7 @@
 </main>
 
 <footer>
-    <span>© 2026 — Oussama Zehri &nbsp;·&nbsp; <a href="mailto:wess4sec@gmail.com">wess4sec@gmail.com</a></span>
+    <span>© 2026 — Oussama Zehri &nbsp;·&nbsp; wess4sec@gmail.com</span>
 </footer>
 
 <script>
