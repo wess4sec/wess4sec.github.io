@@ -63,7 +63,7 @@
 
     <div class="stats-bar">
         <div class="stat">
-            <span class="stat-number" id="machineCount" data-target="110">0</span><span class="stat-number">+</span>
+            <span class="stat-number" id="machineCount" data-target="110">0+</span>
             <span class="stat-label">Machines Rooted</span>
         </div>
         <div class="stat-divider"></div>
@@ -223,51 +223,69 @@
 
 <script src="typing.js"></script>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // THEME
     const toggle = document.getElementById('themeToggle');
     if (localStorage.getItem('theme') === 'light') document.body.classList.add('light');
-    toggle.addEventListener('click', () => {
+    if (toggle) toggle.addEventListener('click', () => {
         document.body.classList.toggle('light');
         localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
     });
 
-    const skillObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.querySelectorAll('.skill-fill').forEach(bar => {
-                    bar.style.width = bar.getAttribute('data-width');
-                });
-                skillObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.2 });
-    document.querySelectorAll('.skills-grid').forEach(el => skillObserver.observe(el));
-
-    // Counter animation - fires on page load
-    function startCounter() {
-        const countEl = document.getElementById('machineCount');
-        if (!countEl || countEl.dataset.animated) return;
-        countEl.dataset.animated = true;
-        const target = parseInt(countEl.getAttribute('data-target'));
-        let current = 0;
-        const duration = 2000;
-        const steps = 60;
-        const increment = target / steps;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                countEl.textContent = target;
-                clearInterval(timer);
-            } else {
-                countEl.textContent = Math.floor(current);
-            }
-        }, duration / steps);
-    }
-    // Fire after short delay so user sees the animation
-    setTimeout(startCounter, 500);
-
-    // Dropdown toggle - click based, closes on outside click
+    // DROPDOWN
     const writeupToggle = document.getElementById('writeupToggle');
     const writeupMenu = document.getElementById('writeupMenu');
-    
     if (writeupToggle && writeupMenu) {
-        writeupTogg
+        writeupToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            writeupMenu.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            const nav = document.getElementById('navWriteups');
+            if (nav && !nav.contains(e.target)) writeupMenu.classList.remove('open');
+        });
+    }
+
+    // COUNTER 0 → 110+
+    const countEl = document.getElementById('machineCount');
+    if (countEl) {
+        let current = 0;
+        const target = 110;
+        const steps = 60;
+        const inc = target / steps;
+        setTimeout(() => {
+            const timer = setInterval(() => {
+                current += inc;
+                if (current >= target) {
+                    countEl.textContent = '110+';
+                    clearInterval(timer);
+                } else {
+                    countEl.textContent = Math.floor(current) + '+';
+                }
+            }, 2000 / steps);
+        }, 600);
+    }
+
+    // SKILL BARS
+    function animateBars() {
+        document.querySelectorAll('.skill-fill').forEach(bar => {
+            const w = bar.getAttribute('data-width');
+            if (w) bar.style.width = w;
+        });
+    }
+    const grid = document.querySelector('.skills-grid');
+    if (grid) {
+        const obs = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                setTimeout(animateBars, 150);
+                obs.disconnect();
+            }
+        }, { threshold: 0.05 });
+        obs.observe(grid);
+    }
+
+});
+</script>
+</body>
+</html>
