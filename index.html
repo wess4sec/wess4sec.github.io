@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OZX | Offensive Security</title>
+    <title>OZX | Security Researcher</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -21,6 +21,24 @@
 
 /* COUNTER */
 #machineCount { display: inline; }
+</style>
+<style>
+:root {
+    --red:#c0392b; --blue:#2980b9;
+    --purple:#8b5cf6; --purple-light:#a78bfa; --purple-dark:#6d28d9;
+    --bg:#0d0d12; --bg-card:#13131a; --bg-card-hover:rgba(24,24,34,0.5);
+    --border:rgba(255,255,255,0.06); --border-mid:rgba(255,255,255,0.1);
+    --text:#f1f0ff; --text-dim:#9896b0; --text-faint:#3d3b55;
+    --green:#a78bfa;
+}
+body::before {
+    content:""; position:fixed; top:0; left:0; width:100%; height:100%;
+    background:
+        radial-gradient(ellipse at 50% -10%, rgba(139,92,246,0.12), transparent 60%),
+        radial-gradient(ellipse at 10% 60%, rgba(192,57,43,0.04), transparent 40%),
+        radial-gradient(ellipse at 90% 60%, rgba(41,128,185,0.04), transparent 40%);
+    pointer-events:none; z-index:0;
+}
 </style>
 </head>
 <body>
@@ -59,7 +77,7 @@
 <!-- HEADER -->
 <header>
     <h1>Oussama Zehri</h1>
-    <p class="tagline">Penetration Testing · Threat Detection · Adversarial Simulation</p>
+    <p class="tagline">Red Team · Blue Team · Cloud Security · Adversarial Simulation</p>
 
     <div class="stats-bar">
         <div class="stat">
@@ -98,7 +116,7 @@
 <!-- PROFILE -->
 <section id="profile">
     <h2>// Profile</h2>
-    <p>Cybersecurity-focused Information Technology student specializing in penetration testing, vulnerability assessment, and adversarial methodologies. Hands-on experience in security monitoring, network analysis, and offensive tooling through labs, internships, and continuous self-driven research.</p>
+    <p>Cybersecurity researcher and certified red team operator with hands-on experience across offensive and defensive disciplines. Certified in multi-cloud red teaming (MCRTA) and Active Directory attacks (AD-RTA). Currently expanding into SOC operations and log analysis while pursuing OSCP. Top 3% on TryHackMe with 110+ machines rooted.</p>
 </section>
 
 <!-- CTF ACTIVITY -->
@@ -124,7 +142,7 @@
 <section>
     <h2>// Core Capabilities</h2>
     <div class="grid">
-        <div class="card"><h3>Offensive Security</h3><p>Web Application Testing · Enumeration · Exploitation · Privilege Escalation</p></div>
+        <div class="card"><h3>Red Team Operations</h3><p>Penetration Testing · Exploitation · Privilege Escalation · Adversarial Simulation</p></div>
         <div class="card"><h3>Security Operations</h3><p>Wazuh Monitoring · Log Analysis · Threat Detection · Honeypot Deployment</p></div>
         <div class="card"><h3>Network & Assessment</h3><p>Nmap · Wireshark · Service Enumeration · Vulnerability Discovery</p></div>
         <div class="card"><h3>Scripting & Databases</h3><p>Python · SQL · PHP · JavaScript · Java · C · MongoDB</p></div>
@@ -140,7 +158,9 @@
         <div class="skill-item"><div class="skill-header"><span class="skill-name">Python Scripting</span><span class="skill-level">Intermediate</span></div><div class="skill-bar"><div class="skill-fill" data-width="70%"></div></div></div>
         <div class="skill-item"><div class="skill-header"><span class="skill-name">Metasploit</span><span class="skill-level">Intermediate</span></div><div class="skill-bar"><div class="skill-fill" data-width="72%"></div></div></div>
         <div class="skill-item"><div class="skill-header"><span class="skill-name">Wazuh / SIEM</span><span class="skill-level">Intermediate</span></div><div class="skill-bar"><div class="skill-fill" data-width="68%"></div></div></div>
-        <div class="skill-item"><div class="skill-header"><span class="skill-name">Active Directory</span><span class="skill-level">Intermediate</span></div><div class="skill-bar"><div class="skill-fill" data-width="65%"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Active Directory</span><span class="skill-level">Advanced</span></div><div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name">Cloud Red Team</span><span class="skill-level">Intermediate</span></div><div class="skill-bar"><div class="skill-fill" data-width="62%"></div></div></div>
+                    <div class="skill-item"><div class="skill-header"><span class="skill-name">SOC / Log Analysis</span><span class="skill-level">Beginner</span></div><div class="skill-bar"><div class="skill-fill" data-width="30%"></div></div></div>
         <div class="skill-item"><div class="skill-header"><span class="skill-name">Network Analysis</span><span class="skill-level">Intermediate</span></div><div class="skill-bar"><div class="skill-fill" data-width="70%"></div></div></div>
         <div class="skill-item"><div class="skill-header"><span class="skill-name">Linux Administration</span><span class="skill-level">Advanced</span></div><div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div></div>
     </div>
@@ -150,14 +170,14 @@
 <section>
     <h2>// Certifications & Training</h2>
     <div class="card cert-card">
-        <div class="cert-item done">✔ MCRTA — Multi Cloud Certified Red Team Analyst</div>
-        <div class="cert-item done">✔ AD-RTA — Active Directory Red Team Analyst</div>
+        <div class="cert-item done">✔ MCRTA — Multi Cloud Red Team Analyst <span style="color:var(--purple);font-size:0.72rem;">[CWL Certified]</span></div>
+        <div class="cert-item done">✔ AD-RTA — Active Directory Red Team Analyst <span style="color:var(--purple);font-size:0.72rem;">[CWL Certified]</span></div>
         <div class="cert-item done">✔ eJPTv2 — Course Completed</div>
         <div class="cert-item done">✔ eCPPTv2 — Course Completed</div>
         <div class="cert-item done">✔ CompTIA Network+ — Course Completed</div>
         <div class="cert-item done">✔ CompTIA A+ — Course Completed</div>
-        <div class="cert-item done">✔ IBM Cybersecurity Fundamentals — Certified</div>
-        <div class="cert-item done">✔ Cisco Introduction to Cybersecurity — Certified</div>
+        <div class="cert-item done">✔ IBM Cybersecurity Fundamentals <span style="color:var(--blue);font-size:0.72rem;">[Certified]</span></div>
+        <div class="cert-item done">✔ Cisco Introduction to Cybersecurity <span style="color:var(--blue);font-size:0.72rem;">[Certified]</span></div>
         <div class="cert-item pending">⏳ OSCP — In Progress</div>
     </div>
 </section>
